@@ -20,7 +20,7 @@ export class TransactionsController {
   }
 
   static async getByCategoryId(req: Request, res: Response) {
-    let categoryId = req.params.userId;
+    let categoryId = req.params.categoryId;
 
     res.send(await new TransactionService().getByCategoryId(categoryId));
   }
@@ -31,7 +31,7 @@ export class TransactionsController {
     const createdTransaction = await new TransactionService().save(transaction);
 
     res.status(201).send({
-      message: "Transaction created successfully!",
+      message: "Transaction created successfully.",
       id: createdTransaction.id,
     });
   }

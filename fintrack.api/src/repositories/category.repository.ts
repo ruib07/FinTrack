@@ -25,6 +25,7 @@ export class CategoryRepository {
     category: Partial<Category>
   ): Promise<Category | null> {
     const [updatedCategory] = await db<Category>("categories")
+      .where({ id })
       .update({ ...category })
       .returning("*");
 
