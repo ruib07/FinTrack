@@ -4,7 +4,7 @@ import knex from "knex";
 import knexfile from "../knexfile.js";
 import { NODE_ENV } from "./config.js";
 import { errorHandler } from "./middlewares/error-handler.middleware.js";
-//import { routes } from "./routes/index.js";
+import { routes } from "./routes/index.js";
 
 const app = express();
 app.use(express.json());
@@ -20,7 +20,7 @@ app.use(
   })
 );
 
-//routes(app);
+routes(app);
 errorHandler(app);
 
 app.get("/", (req: Request, res: Response) => {

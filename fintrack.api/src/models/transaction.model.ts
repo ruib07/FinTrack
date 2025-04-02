@@ -4,7 +4,7 @@ export interface Transaction {
   type: string;
   payment_method: string;
   date: Date;
-  note: string;
+  note?: string;
   user_id: string;
   category_id: string;
 }
