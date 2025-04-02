@@ -1,8 +1,9 @@
 import { Config } from "jest";
 
 const config: Config = {
-  preset: "ts-jest/presets/default-esm",
+  preset: "ts-jest",
   testEnvironment: "node",
+  extensionsToTreatAsEsm: [".ts"],
   transform: {
     "^.+\\.(ts|tsx)$": [
       "ts-jest",

@@ -16,6 +16,8 @@ export class ResetPasswordService {
   async sendPasswordResetEmail(userEmail: string): Promise<void> {
     const user = await this.userRepository.getByEmail(userEmail);
 
+    if (!user) return;
+
     const token = this.generateResetToken();
     const expirydate = new Date();
     expirydate.setHours(expirydate.getHours() + 1);
@@ -52,12 +54,12 @@ export class ResetPasswordService {
     confirmNewPassword: string
   ): Promise<void> {
     if (newPassword !== confirmNewPassword)
-      throw new ValidationError("Passwords do not match!");
+      throw new ValidationError("Passwords do not match.");
 
     const tokenRecord = await this.resetTokenRepository.findByToken(token);
 
     if (!tokenRecord || new Date() > tokenRecord.expirydate)
-      throw new ValidationError("Invalid or expired token!");
+      throw new ValidationError("Invalid or expired token.");
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
@@ -66,9 +68,7 @@ export class ResetPasswordService {
         password: hashedPassword,
       });
     } else {
-      throw new ValidationError(
-        "No associated user or employee found for this token!"
-      );
+      throw new ValidationError("No associated user found for this token.");
     }
 
     await this.resetTokenRepository.deleteByToken(token);

@@ -25,7 +25,7 @@ export class ReportsController {
     const createdReport = await new ReportService().save(report);
 
     res.status(201).send({
-      message: "Report created successfully!",
+      message: "Report created successfully.",
       id: createdReport.id,
     });
   }

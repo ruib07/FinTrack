@@ -20,7 +20,7 @@ export class BudgetsController {
   }
 
   static async getByCategoryId(req: Request, res: Response) {
-    let categoryId = req.params.userId;
+    let categoryId = req.params.categoryId;
 
     res.send(await new BudgetService().getByCategoryId(categoryId));
   }
@@ -31,7 +31,7 @@ export class BudgetsController {
     const createdBudget = await new BudgetService().save(budget);
 
     res.status(201).send({
-      message: "Budget created successfully!",
+      message: "Budget created successfully.",
       id: createdBudget.id,
     });
   }
