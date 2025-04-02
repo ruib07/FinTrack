@@ -8,4 +8,4 @@ let envPath = resolve(__dirname, `../env/${process.env.NODE_ENV}.env`);
 
 config({ path: envPath });
 
-export const NODE_ENV: "development" = process.env.NODE_ENV as "development";
+export const NODE_ENV = process.env.NODE_ENV || "development";

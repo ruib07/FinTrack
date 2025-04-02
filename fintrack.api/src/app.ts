@@ -9,7 +9,7 @@ import { routes } from "./routes/index.js";
 const app = express();
 app.use(express.json());
 
-app.db = knex(knexfile[NODE_ENV]);
+app.db = knex(knexfile[NODE_ENV as keyof typeof knexfile]);
 
 app.use(
   cors({
