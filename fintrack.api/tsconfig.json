@@ -17,6 +17,6 @@
     "isolatedModules": true
   },
   "compileOnSave": true,
-  "include": ["src/**/*", "tests/**/*"],
-  "exclude": ["**/*.spec.ts"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "tests/**/*"]
 }

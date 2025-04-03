@@ -9,9 +9,9 @@
   "scripts": {
     "copy-env": "ncp ./env ./dist/env",
     "build": "tsc && npm run copy-env",
-    "start:dev": "export NODE_ENV=development && npm run knex:migrate:dev && ts-node ./dist/src/app.js",
+    "start:dev": "export NODE_ENV=development && npm run knex:migrate:dev && ts-node ./dist/src/server.js",
     "lint": "eslint src/** tests/** --fix",
-    "test": "NODE_ENV=development NODE_OPTIONS=--experimental-vm-modules jest --coverage --runInBand --forceExit",
+    "test": "NODE_ENV=development NODE_OPTIONS=--experimental-vm-modules jest --coverage --forceExit",
     "knex:migrate:dev": "NODE_ENV=development tsx node_modules/.bin/knex migrate:latest --env development",
     "knex:rollback:dev": "NODE_ENV=development tsx node_modules/.bin/knex migrate:rollback --env development",
     "secure-mode": "export NODE_ENV=development && npm run knex:migrate:dev && jest --watchAll"

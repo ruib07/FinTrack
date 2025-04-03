@@ -34,8 +34,4 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   next(err);
 });
 
-app.listen(3005, () => {
-  console.log("Server listening on port 3005");
-});
-
 export default app;
