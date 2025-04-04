@@ -3,11 +3,11 @@ import apiRequest from "./helpers/api.service";
 
 const route = "categories";
 
-export const GetCategories = async () =>
-  apiRequest("GET", route, undefined, true);
-
 export const GetCategoryByID = async (categoryId: string) =>
   apiRequest("GET", `${route}/${categoryId}`, undefined, true);
+
+export const GetCategoriesByUser = async (userId: string) =>
+  apiRequest("GET", `${route}/by-user/${userId}`, undefined, true);
 
 export const CreateCategory = async (newCategory: ICategory) =>
   apiRequest("POST", route, newCategory, true);

@@ -5,6 +5,7 @@ export interface CategoryTest {
   name: string | null;
   type: string | null;
   icon: string | null;
+  user_id: string | null;
 }
 
 export const generateCategory = (
@@ -16,4 +17,5 @@ export const generateCategory = (
     overrides.icon !== undefined
       ? overrides.icon
       : "https://img.icons8.com/?size=100&id=1349&format=png&color=000000",
+  user_id: overrides.user_id ?? null,
 });

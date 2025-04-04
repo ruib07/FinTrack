@@ -3,4 +3,5 @@ export interface Category {
   name: string;
   type: string;
   icon?: string;
+  user_id: string;
 }

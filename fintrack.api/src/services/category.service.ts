@@ -18,6 +18,10 @@ export class CategoryService {
     return category;
   }
 
+  async getByUserId(userId: string): Promise<Category[]> {
+    return this.categoryRepository.getByUserId(userId);
+  }
+
   async save(category: Category): Promise<Category> {
     if (!category.name) throw new ValidationError("Name is required.");
     if (!category.type) throw new ValidationError("Type is required.");

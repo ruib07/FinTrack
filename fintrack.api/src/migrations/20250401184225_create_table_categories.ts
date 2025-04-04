@@ -8,6 +8,12 @@ export async function up(knex: Knex): Promise<void> {
     t.string("name", 50).unique().notNullable();
     t.string("type", 10).notNullable();
     t.text("icon").nullable();
+
+    t.uuid("user_id")
+      .references("id")
+      .inTable("users")
+      .onDelete("CASCADE")
+      .notNullable();
   });
 
   await knex.raw(`

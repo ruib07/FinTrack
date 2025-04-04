@@ -22,7 +22,9 @@ describe("Category Tests", () => {
   });
 
   test("Should return a category by ID", async () => {
-    const category = generateCategory();
+    const category = generateCategory({
+      user_id: user.id,
+    });
 
     const createCategoryRes: Response = await supertest(app)
       .post(route)
@@ -49,8 +51,29 @@ describe("Category Tests", () => {
     expect(res.body.message).toBe("Category not found.");
   });
 
+  test("Should return all categories when user ID is valid", async () => {
+    const category = generateCategory({
+      user_id: user.id,
+    });
+
+    const createCategoryRes: Response = await supertest(app)
+      .post(route)
+      .set("Authorization", `Bearer ${user.token}`)
+      .send(category);
+
+    expect(createCategoryRes.status).toBe(201);
+
+    const res: Response = await supertest(app)
+      .get(`${route}/by-user/${user.id}`)
+      .set("Authorization", `Bearer ${user.token}`);
+
+    expect(res.status).toBe(200);
+  });
+
   test("Should create a new category successfully", async () => {
-    const newCategory = generateCategory();
+    const newCategory = generateCategory({
+      user_id: user.id,
+    });
 
     const res: Response = await supertest(app)
       .post(route)
@@ -66,7 +89,10 @@ describe("Category Tests", () => {
     newData: Partial<CategoryTest>,
     errorMessage: string
   ) => {
-    const category = generateCategory(newData);
+    const category = generateCategory({
+      ...newData,
+      user_id: user.id,
+    });
 
     const res: Response = await supertest(app)
       .post(route)
@@ -83,7 +109,9 @@ describe("Category Tests", () => {
     testTemplate({ type: null }, "Type is required."));
 
   test("Should update a category successfully", async () => {
-    const newCategory = generateCategory();
+    const newCategory = generateCategory({
+      user_id: user.id,
+    });
 
     const createCategoryRes: Response = await supertest(app)
       .post(route)
@@ -94,7 +122,9 @@ describe("Category Tests", () => {
 
     const createdCategory = createCategoryRes.body;
 
-    const updatedCategory = generateCategory();
+    const updatedCategory = generateCategory({
+      user_id: user.id,
+    });
 
     const res: Response = await supertest(app)
       .put(`${route}/${createdCategory.id}`)
@@ -106,7 +136,9 @@ describe("Category Tests", () => {
   });
 
   test("Should delete a category by ID", async () => {
-    const category = generateCategory();
+    const category = generateCategory({
+      user_id: user.id,
+    });
 
     const createCategoryRes: Response = await supertest(app)
       .post(route)

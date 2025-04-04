@@ -13,6 +13,12 @@ export class CategoriesController {
     res.send(await new CategoryService().getById(categoryId));
   }
 
+  static async getByUserId(req: Request, res: Response) {
+    let userId = req.params.userId;
+
+    res.send(await new CategoryService().getByUserId(userId));
+  }
+
   static async create(req: Request, res: Response) {
     const category = req.body as Category;
 

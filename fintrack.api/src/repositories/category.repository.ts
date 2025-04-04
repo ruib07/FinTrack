@@ -12,6 +12,14 @@ export class CategoryRepository {
     return category ?? null;
   }
 
+  async getByUserId(userId: string): Promise<Category[]> {
+    const categories = await db<Category>("categories")
+      .where({ user_id: userId })
+      .select("*");
+
+    return categories;
+  }
+
   async save(category: Omit<Category, "id">): Promise<Category> {
     const [newCategory] = await db<Category>("categories")
       .insert({ ...category })

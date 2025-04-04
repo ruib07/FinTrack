@@ -13,7 +13,9 @@ let category: any;
 beforeAll(async () => {
   user = await createAndAuthenticateUser();
 
-  const categoryRegistration = generateCategory();
+  const categoryRegistration = generateCategory({
+    user_id: user.id,
+  });
 
   const res: Response = await supertest(app)
     .post("/categories")

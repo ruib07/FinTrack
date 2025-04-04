@@ -23,15 +23,4 @@ export default StyleSheet.create({
     position: "absolute",
     right: 10,
   },
-  button: {
-    backgroundColor: "#4F46E5",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    margin: 30,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "#FFF",
-    fontSize: 18,
-  },
 });

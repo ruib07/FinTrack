@@ -87,14 +87,16 @@ export default function SignupScreen() {
             onValueChange={(itemValue) => setCurrency(itemValue)}
             items={[
               { label: "Select a currency...", value: "" },
-              { label: "EUR", value: "EUR" },
-              { label: "USD", value: "USD" },
-              { label: "BRL", value: "BRL" },
+              { label: "EUR (€)", value: "EUR" },
+              { label: "USD ($)", value: "USD" },
+              { label: "BRL (R$)", value: "BRL" },
             ]}
           />
         </ThemedView>
-        <TouchableOpacity style={formStyles.button} onPress={handleSignup}>
-          <ThemedText style={formStyles.buttonText}>Create Account</ThemedText>
+        <TouchableOpacity style={globalStyles.button} onPress={handleSignup}>
+          <ThemedText style={globalStyles.buttonText}>
+            Create Account
+          </ThemedText>
         </TouchableOpacity>
         <ThemedView style={{ flexDirection: "row", alignItems: "center" }}>
           <ThemedText>Already have an account?</ThemedText>

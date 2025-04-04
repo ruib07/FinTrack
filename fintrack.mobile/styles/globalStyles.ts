@@ -21,4 +21,17 @@ export default StyleSheet.create({
     marginBottom: 8,
     alignItems: "center",
   },
+  button: {
+    backgroundColor: "#1D3D47",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginTop: 20,
+    width: "50%",
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#FFF",
+    fontSize: 18,
+    textAlign: "center",
+  },
 });
