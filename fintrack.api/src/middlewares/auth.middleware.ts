@@ -7,7 +7,7 @@ const secret = process.env.JWT_SECRET;
 export const authMiddleware = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): void => {
   const token = req.headers.authorization?.split(" ")[1];
 
@@ -20,7 +20,7 @@ export const authMiddleware = (
     const decoded = jwt.decode(token, secret!) as User;
     req.user = decoded;
     next();
-  } catch (error) {
+  } catch {
     res.status(401).json({ message: "Invalid Token." });
     return;
   }

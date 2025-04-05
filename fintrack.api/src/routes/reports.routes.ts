@@ -8,7 +8,7 @@ reportsRoutes.get("/", asyncHandler(ReportsController.getAll));
 reportsRoutes.get("/:id", asyncHandler(ReportsController.getById));
 reportsRoutes.get(
   "/by-user/:userId",
-  asyncHandler(ReportsController.getByUserId)
+  asyncHandler(ReportsController.getByUserId),
 );
 reportsRoutes.post("/", asyncHandler(ReportsController.create));
 reportsRoutes.put("/:id", asyncHandler(ReportsController.update));

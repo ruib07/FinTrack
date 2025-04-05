@@ -8,10 +8,10 @@ transactionsRoutes.get("/", asyncHandler(TransactionsController.getAll));
 transactionsRoutes.get("/:id", asyncHandler(TransactionsController.getById));
 transactionsRoutes.get(
   "/by-user/:userId",
-  asyncHandler(TransactionsController.getByUserId)
+  asyncHandler(TransactionsController.getByUserId),
 );
 transactionsRoutes.get(
   "/by-category/:categoryId",
-  asyncHandler(TransactionsController.getByCategoryId)
+  asyncHandler(TransactionsController.getByCategoryId),
 );
 transactionsRoutes.post("/", asyncHandler(TransactionsController.create));

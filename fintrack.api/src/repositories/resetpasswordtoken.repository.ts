@@ -3,7 +3,7 @@ import { ResetPasswordToken } from "../models/resetpasswordtoken.model.js";
 
 export class ResetPasswordTokenRepository {
   async create(
-    tokenData: Partial<ResetPasswordToken>
+    tokenData: Partial<ResetPasswordToken>,
   ): Promise<ResetPasswordToken> {
     const [newToken] = await db<ResetPasswordToken>("resetpasswordtokens")
       .insert(tokenData)

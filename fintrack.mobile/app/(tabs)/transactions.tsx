@@ -79,8 +79,14 @@ export default function TransactionsScreen() {
         autoCorrect={false}
         value={searchQuery}
         onChangeText={handleSearch}
+        style={{ width: "90%" }}
       />
-
+      <TouchableOpacity
+        style={[globalStyles.button, { marginBottom: 4 }]}
+        onPress={() => router.push("/(transactions)/addtransaction")}
+      >
+        <ThemedText style={globalStyles.buttonText}>Add Transaction</ThemedText>
+      </TouchableOpacity>
       <FlatList
         data={filteredTransactions}
         keyExtractor={(item) => item.id!.toString()}
@@ -94,9 +100,15 @@ export default function TransactionsScreen() {
               }}
               //onPress={() => router.push(`/transaction?id=${item.id}`)}
             >
-              <ThemedText type="subtitle">💰 Amount: ${item.amount}</ThemedText>
+              <ThemedText type="subtitle">💰 Amount: {item.amount}</ThemedText>
               <ThemedText type="subtitle" style={{ marginTop: 4 }}>
                 📌 Category: {categories[item.category_id] || "Loading..."}
+              </ThemedText>
+              <ThemedText type="subtitle" style={{ marginTop: 4 }}>
+                ✏️ Note: {item.note || "None"}
+              </ThemedText>
+              <ThemedText type="subtitle" style={{ marginTop: 4 }}>
+                📅 Date: {new Date(item.date).toLocaleDateString()}
               </ThemedText>
             </TouchableOpacity>
           </ThemedView>

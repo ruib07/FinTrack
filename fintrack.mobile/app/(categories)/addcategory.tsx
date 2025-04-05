@@ -60,7 +60,7 @@ export default function AddCategoryScreen() {
             value={icon}
           />
         </ThemedView>
-        <ThemedText type="subtitle" style={{ marginBottom: 8 }}>
+        <ThemedText type="default" style={{ marginBottom: 8 }}>
           Choose your type:
         </ThemedText>
         <ThemedModal

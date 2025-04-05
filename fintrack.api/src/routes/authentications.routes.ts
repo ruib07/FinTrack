@@ -6,9 +6,9 @@ export const authenticationsRoutes = Router();
 
 authenticationsRoutes.post(
   "/signin",
-  asyncHandler(AuthenticationsController.signin)
+  asyncHandler(AuthenticationsController.signin),
 );
 authenticationsRoutes.post(
   "/signup",
-  asyncHandler(AuthenticationsController.signup)
+  asyncHandler(AuthenticationsController.signup),
 );

@@ -8,19 +8,19 @@ export class TransactionsController {
   }
 
   static async getById(req: Request, res: Response) {
-    let transactionId = req.params.id;
+    const transactionId = req.params.id;
 
     res.send(await new TransactionService().getById(transactionId));
   }
 
   static async getByUserId(req: Request, res: Response) {
-    let userId = req.params.userId;
+    const userId = req.params.userId;
 
     res.send(await new TransactionService().getByUserId(userId));
   }
 
   static async getByCategoryId(req: Request, res: Response) {
-    let categoryId = req.params.categoryId;
+    const categoryId = req.params.categoryId;
 
     res.send(await new TransactionService().getByCategoryId(categoryId));
   }

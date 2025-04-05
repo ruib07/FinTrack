@@ -7,7 +7,7 @@ export class PasswordValidator {
   static validate(password: string) {
     if (!passwordRegexPattern.test(password)) {
       throw new ValidationError(
-        "Password must have at least 9 characters, one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)."
+        "Password must have at least 9 characters, one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&).",
       );
     }
   }

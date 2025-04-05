@@ -79,7 +79,7 @@ export default function SignupScreen() {
               />
             </TouchableOpacity>
           </ThemedView>
-          <ThemedText type="subtitle" style={{ marginBottom: 8 }}>
+          <ThemedText type="default" style={{ marginBottom: 8 }}>
             Choose your currency:
           </ThemedText>
           <ThemedModal
@@ -98,7 +98,9 @@ export default function SignupScreen() {
             Create Account
           </ThemedText>
         </TouchableOpacity>
-        <ThemedView style={{ flexDirection: "row", alignItems: "center" }}>
+        <ThemedView
+          style={{ marginTop: 8, flexDirection: "row", alignItems: "center" }}
+        >
           <ThemedText>Already have an account?</ThemedText>
           <ThemedText
             type="link"

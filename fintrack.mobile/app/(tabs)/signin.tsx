@@ -107,7 +107,9 @@ export default function SigninScreen() {
         <TouchableOpacity style={globalStyles.button} onPress={handleSignin}>
           <ThemedText style={globalStyles.buttonText}>Sign in</ThemedText>
         </TouchableOpacity>
-        <ThemedView style={{ flexDirection: "row", alignItems: "center" }}>
+        <ThemedView
+          style={{ marginTop: 8, flexDirection: "row", alignItems: "center" }}
+        >
           <ThemedText>Dont have an account?</ThemedText>
           <ThemedText
             type="link"

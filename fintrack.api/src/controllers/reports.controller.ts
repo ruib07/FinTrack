@@ -8,13 +8,13 @@ export class ReportsController {
   }
 
   static async getById(req: Request, res: Response) {
-    let reportId = req.params.id;
+    const reportId = req.params.id;
 
     res.send(await new ReportService().getById(reportId));
   }
 
   static async getByUserId(req: Request, res: Response) {
-    let userId = req.params.userId;
+    const userId = req.params.userId;
 
     res.send(await new ReportService().getByUserId(userId));
   }
@@ -31,8 +31,8 @@ export class ReportsController {
   }
 
   static async update(req: Request, res: Response) {
-    let reportId = req.params.id;
-    let report = req.body as Report;
+    const reportId = req.params.id;
+    const report = req.body as Report;
 
     await new ReportService().update(reportId, report);
 
@@ -42,7 +42,7 @@ export class ReportsController {
   }
 
   static async delete(req: Request, res: Response) {
-    let reportId = req.params.id;
+    const reportId = req.params.id;
 
     await new ReportService().delete(reportId);
     res.status(204).end();

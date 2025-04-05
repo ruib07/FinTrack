@@ -8,19 +8,19 @@ export class BudgetsController {
   }
 
   static async getById(req: Request, res: Response) {
-    let budgetId = req.params.id;
+    const budgetId = req.params.id;
 
     res.send(await new BudgetService().getById(budgetId));
   }
 
   static async getByUserId(req: Request, res: Response) {
-    let userId = req.params.userId;
+    const userId = req.params.userId;
 
     res.send(await new BudgetService().getByUserId(userId));
   }
 
   static async getByCategoryId(req: Request, res: Response) {
-    let categoryId = req.params.categoryId;
+    const categoryId = req.params.categoryId;
 
     res.send(await new BudgetService().getByCategoryId(categoryId));
   }
@@ -37,8 +37,8 @@ export class BudgetsController {
   }
 
   static async update(req: Request, res: Response) {
-    let budgetId = req.params.id;
-    let budget = req.body as Budget;
+    const budgetId = req.params.id;
+    const budget = req.body as Budget;
 
     await new BudgetService().update(budgetId, budget);
 
@@ -48,7 +48,7 @@ export class BudgetsController {
   }
 
   static async delete(req: Request, res: Response) {
-    let budgetId = req.params.id;
+    const budgetId = req.params.id;
 
     await new BudgetService().delete(budgetId);
     res.status(204).end();

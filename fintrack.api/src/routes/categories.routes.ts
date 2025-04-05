@@ -8,7 +8,7 @@ categoriesRoutes.get("/", asyncHandler(CategoriesController.getAll));
 categoriesRoutes.get("/:id", asyncHandler(CategoriesController.getById));
 categoriesRoutes.get(
   "/by-user/:userId",
-  asyncHandler(CategoriesController.getByUserId)
+  asyncHandler(CategoriesController.getByUserId),
 );
 categoriesRoutes.post("/", asyncHandler(CategoriesController.create));
 categoriesRoutes.put("/:id", asyncHandler(CategoriesController.update));

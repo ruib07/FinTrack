@@ -8,13 +8,13 @@ export class CategoriesController {
   }
 
   static async getById(req: Request, res: Response) {
-    let categoryId = req.params.id;
+    const categoryId = req.params.id;
 
     res.send(await new CategoryService().getById(categoryId));
   }
 
   static async getByUserId(req: Request, res: Response) {
-    let userId = req.params.userId;
+    const userId = req.params.userId;
 
     res.send(await new CategoryService().getByUserId(userId));
   }
@@ -31,8 +31,8 @@ export class CategoriesController {
   }
 
   static async update(req: Request, res: Response) {
-    let categoryId = req.params.id;
-    let category = req.body as Category;
+    const categoryId = req.params.id;
+    const category = req.body as Category;
 
     await new CategoryService().update(categoryId, category);
 
@@ -42,7 +42,7 @@ export class CategoriesController {
   }
 
   static async delete(req: Request, res: Response) {
-    let categoryId = req.params.id;
+    const categoryId = req.params.id;
 
     await new CategoryService().delete(categoryId);
     res.status(204).end();

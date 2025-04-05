@@ -8,11 +8,11 @@ budgetsRoutes.get("/", asyncHandler(BudgetsController.getAll));
 budgetsRoutes.get("/:id", asyncHandler(BudgetsController.getById));
 budgetsRoutes.get(
   "/by-user/:userId",
-  asyncHandler(BudgetsController.getByUserId)
+  asyncHandler(BudgetsController.getByUserId),
 );
 budgetsRoutes.get(
   "/by-category/:categoryId",
-  asyncHandler(BudgetsController.getByCategoryId)
+  asyncHandler(BudgetsController.getByCategoryId),
 );
 budgetsRoutes.post("/", asyncHandler(BudgetsController.create));
 budgetsRoutes.put("/:id", asyncHandler(BudgetsController.update));

@@ -6,9 +6,9 @@ export const resetPasswordsRoutes = Router();
 
 resetPasswordsRoutes.post(
   "/send-email",
-  asyncHandler(ResetPasswordsController.requestPasswordReset)
+  asyncHandler(ResetPasswordsController.requestPasswordReset),
 );
 resetPasswordsRoutes.put(
   "/change-password",
-  asyncHandler(ResetPasswordsController.changePassword)
+  asyncHandler(ResetPasswordsController.changePassword),
 );

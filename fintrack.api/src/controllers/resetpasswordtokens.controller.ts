@@ -14,7 +14,7 @@ export class ResetPasswordsController {
     await new ResetPasswordService().resetPassword(
       token,
       newPassword,
-      confirmNewPassword
+      confirmNewPassword,
     );
 
     res.status(200).json({ message: "Password changed successfully." });

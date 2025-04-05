@@ -31,7 +31,7 @@ export class CategoryService {
 
   async update(
     id: string,
-    updates: Partial<Category>
+    updates: Partial<Category>,
   ): Promise<Category | null> {
     const category = await this.categoryRepository.getById(id);
 

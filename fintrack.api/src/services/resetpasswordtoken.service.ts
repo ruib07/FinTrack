@@ -51,7 +51,7 @@ export class ResetPasswordService {
   async resetPassword(
     token: string,
     newPassword: string,
-    confirmNewPassword: string
+    confirmNewPassword: string,
   ): Promise<void> {
     if (newPassword !== confirmNewPassword)
       throw new ValidationError("Passwords do not match.");

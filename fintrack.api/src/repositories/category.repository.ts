@@ -30,7 +30,7 @@ export class CategoryRepository {
 
   async update(
     id: string,
-    category: Partial<Category>
+    category: Partial<Category>,
   ): Promise<Category | null> {
     const [updatedCategory] = await db<Category>("categories")
       .where({ id })
