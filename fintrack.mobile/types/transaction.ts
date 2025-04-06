@@ -3,7 +3,7 @@ export interface ITransaction {
   amount: number;
   type: string;
   payment_method: string;
-  date: string;
+  date: Date;
   note?: string;
   user_id: string;
   category_id: string;

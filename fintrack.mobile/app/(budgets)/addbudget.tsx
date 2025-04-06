@@ -130,7 +130,7 @@ export default function AddBudgetScreen() {
           onPress={handleBudgetCreation}
         >
           <ThemedText style={globalStyles.buttonText}>
-            Create Transaction
+            Create Budget
           </ThemedText>
         </TouchableOpacity>
       </ThemedView>

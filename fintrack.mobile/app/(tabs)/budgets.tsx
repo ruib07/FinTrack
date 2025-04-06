@@ -7,8 +7,9 @@ import { GetCategoriesByUser } from "@/services/categories.service";
 import globalStyles from "@/styles/globalStyles";
 import { IBudget } from "@/types/budget";
 import { storage } from "@/utils/storage";
+import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Image, TouchableOpacity } from "react-native";
 import { DataTable } from "react-native-paper";
 
@@ -22,31 +23,33 @@ export default function BudgetsScreen() {
   const tableBackground = useThemeColor({}, "tableHeader");
   const rowBackground = useThemeColor({}, "tableRow");
 
-  useEffect(() => {
-    const fetchBudgets = async () => {
-      const userId = await storage.getItem("userId");
+  useFocusEffect(
+    useCallback(() => {
+      const fetchBudgets = async () => {
+        const userId = await storage.getItem("userId");
 
-      if (!userId) return;
+        if (!userId) return;
 
-      try {
-        const budgetsResponse = await GetBudgetsByUser(userId);
-        setBudgets(budgetsResponse.data);
+        try {
+          const budgetsResponse = await GetBudgetsByUser(userId);
+          setBudgets(budgetsResponse.data);
 
-        const categoriesResponse = await GetCategoriesByUser(userId);
-        const categoryOptions = categoriesResponse.data.map(
-          (category: any) => ({
-            label: category.name,
-            value: category.id,
-          })
-        );
-        setCategories(categoryOptions);
-      } catch {
-        setError("Failed to load budgets.");
-      }
-    };
+          const categoriesResponse = await GetCategoriesByUser(userId);
+          const categoryOptions = categoriesResponse.data.map(
+            (category: any) => ({
+              label: category.name,
+              value: category.id,
+            })
+          );
+          setCategories(categoryOptions);
+        } catch {
+          setError("Failed to load budgets.");
+        }
+      };
 
-    fetchBudgets();
-  }, []);
+      fetchBudgets();
+    }, [])
+  );
 
   const getCategoryName = (categoryId: string) => {
     const category = categories.find((cat) => cat.value === categoryId);

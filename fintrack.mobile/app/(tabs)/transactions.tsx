@@ -7,9 +7,10 @@ import globalStyles from "@/styles/globalStyles";
 import transactionStyles from "@/styles/transactionStyles";
 import { ITransaction } from "@/types/transaction";
 import { storage } from "@/utils/storage";
+import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, TouchableOpacity } from "react-native";
+import { useCallback, useState } from "react";
+import { ActivityIndicator, ScrollView, TouchableOpacity } from "react-native";
 
 export default function TransactionsScreen() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,47 +19,51 @@ export default function TransactionsScreen() {
   const [categories, setCategories] = useState<Record<string, string>>({});
   const [, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      const userId = await storage.getItem("userId");
+  useFocusEffect(
+    useCallback(() => {
+      const fetchTransactions = async () => {
+        const userId = await storage.getItem("userId");
 
-      if (!userId) return;
+        if (!userId) return;
 
-      try {
-        const response = await GetTransactionsByUser(userId);
-        setTransactions(response.data);
+        try {
+          const response = await GetTransactionsByUser(userId);
+          setTransactions(response.data);
 
-        const categoryNames: Record<string, string> = {};
-        for (const transaction of response.data) {
-          if (
-            transaction.category_id &&
-            !categoryNames[transaction.category_id]
-          ) {
-            const category = await GetCategoryByID(transaction.category_id);
-            categoryNames[transaction.category_id] = category.data.name;
+          const categoryNames: Record<string, string> = {};
+          for (const transaction of response.data) {
+            if (
+              transaction.category_id &&
+              !categoryNames[transaction.category_id]
+            ) {
+              const category = await GetCategoryByID(transaction.category_id);
+              categoryNames[transaction.category_id] = category.data.name;
+            }
           }
+          setCategories(categoryNames);
+        } catch {
+          setError("Failed to load transactions.");
+        } finally {
+          setIsLoading(false);
         }
-        setCategories(categoryNames);
-      } catch {
-        setError("Failed to load transactions.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
+      };
 
-    fetchTransactions();
-  }, []);
+      fetchTransactions();
+    }, [])
+  );
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
   };
 
   if (isLoading) {
-    <ThemedView
-      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-    >
-      <ActivityIndicator size={"large"} color="#1D3D47" />;
-    </ThemedView>;
+    return (
+      <ThemedView
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
+        <ActivityIndicator size={"large"} color="#1D3D47" />
+      </ThemedView>
+    );
   }
 
   const filteredTransactions = transactions.filter((transaction) =>
@@ -68,30 +73,31 @@ export default function TransactionsScreen() {
   );
 
   return (
-    <ThemedView style={globalStyles.stepContainer}>
-      <ThemedText type="subtitle" style={{ marginTop: 100 }}>
-        Transactions
-      </ThemedText>
-      <ThemedInput
-        placeholder="Search by category"
-        clearButtonMode="always"
-        autoCapitalize="none"
-        autoCorrect={false}
-        value={searchQuery}
-        onChangeText={handleSearch}
-        style={{ width: "90%" }}
-      />
-      <TouchableOpacity
-        style={[globalStyles.button, { marginBottom: 4 }]}
-        onPress={() => router.push("/(transactions)/addtransaction")}
-      >
-        <ThemedText style={globalStyles.buttonText}>Add Transaction</ThemedText>
-      </TouchableOpacity>
-      <FlatList
-        data={filteredTransactions}
-        keyExtractor={(item) => item.id!.toString()}
-        renderItem={({ item }) => (
-          <ThemedView style={transactionStyles.container}>
+    <ScrollView>
+      <ThemedView style={globalStyles.stepContainer}>
+        <ThemedText type="subtitle" style={{ marginTop: 100 }}>
+          Transactions
+        </ThemedText>
+        <ThemedInput
+          placeholder="Search by category"
+          clearButtonMode="always"
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={searchQuery}
+          onChangeText={handleSearch}
+          style={{ width: "90%" }}
+        />
+        <TouchableOpacity
+          style={[globalStyles.button, { marginBottom: 4 }]}
+          onPress={() => router.push("/(transactions)/addtransaction")}
+        >
+          <ThemedText style={globalStyles.buttonText}>
+            Add Transaction
+          </ThemedText>
+        </TouchableOpacity>
+
+        {filteredTransactions.map((item) => (
+          <ThemedView style={transactionStyles.container} key={item.id}>
             <TouchableOpacity
               style={{
                 padding: 15,
@@ -112,8 +118,8 @@ export default function TransactionsScreen() {
               </ThemedText>
             </TouchableOpacity>
           </ThemedView>
-        )}
-      />
-    </ThemedView>
+        ))}
+      </ThemedView>
+    </ScrollView>
   );
 }

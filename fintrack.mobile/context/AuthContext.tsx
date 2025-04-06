@@ -23,8 +23,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     loadAuthData();
   }, []);
 
-  const setAuth = (id: string | null) => {
+  const setAuth = async (id: string | null) => {
     setUserId(id);
+    if (id) {
+      await storage.setItem("userId", id);
+    } else {
+      await storage.removeItem("userId");
+    }
   };
 
   return (

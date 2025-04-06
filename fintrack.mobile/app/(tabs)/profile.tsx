@@ -10,8 +10,9 @@ import globalStyles from "@/styles/globalStyles";
 import profileStyles from "@/styles/profileStyles";
 import { IUser } from "@/types/user";
 import { storage } from "@/utils/storage";
+import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Alert, TouchableOpacity } from "react-native";
 
 export default function ProfileScreen() {
@@ -26,34 +27,36 @@ export default function ProfileScreen() {
   const [originalEmail, setOriginalEmail] = useState<string>("");
   const [originalCurrency, setOriginalCurrency] = useState<string>("");
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const userId = await storage.getItem("userId");
+  useFocusEffect(
+    useCallback(() => {
+      const fetchUser = async () => {
+        const userId = await storage.getItem("userId");
 
-      if (!userId) {
-        setUser(undefined);
-        setEditableName("");
-        setEditableEmail("");
-        setEditableCurrency("");
-        return;
-      }
+        if (!userId) {
+          setUser(undefined);
+          setEditableName("");
+          setEditableEmail("");
+          setEditableCurrency("");
+          return;
+        }
 
-      try {
-        const response = await GetUserById(userId);
-        setUser(response.data);
-        setEditableName(response.data.name);
-        setEditableEmail(response.data.email);
-        setEditableCurrency(response.data.currency);
-        setOriginalName(response.data.name);
-        setOriginalEmail(response.data.email);
-        setOriginalCurrency(response.data.currency);
-      } catch {
-        setError("Failed to load user.");
-      }
-    };
+        try {
+          const response = await GetUserById(userId);
+          setUser(response.data);
+          setEditableName(response.data.name);
+          setEditableEmail(response.data.email);
+          setEditableCurrency(response.data.currency);
+          setOriginalName(response.data.name);
+          setOriginalEmail(response.data.email);
+          setOriginalCurrency(response.data.currency);
+        } catch {
+          setError("Failed to load user.");
+        }
+      };
 
-    fetchUser();
-  }, []);
+      fetchUser();
+    }, [])
+  );
 
   const handleUserUpdate = async (
     userId: string,

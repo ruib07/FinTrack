@@ -9,7 +9,9 @@ import { CreateTransaction } from "@/services/transactions.service";
 import formStyles from "@/styles/formStyles";
 import globalStyles from "@/styles/globalStyles";
 import { ITransaction } from "@/types/transaction";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Alert, Button, Image, Platform, TouchableOpacity } from "react-native";
@@ -22,6 +24,7 @@ export default function AddTransactionScreen() {
   const [note, setNote] = useState<string | null>(null);
   const [categoryId, setCategoryId] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
   const { userId } = useUserId();
   const { categories } = useCategoriesByUser(userId);
 
@@ -43,6 +46,29 @@ export default function AddTransactionScreen() {
     } catch {
       Alert.alert("Something went wrong.");
     }
+  };
+
+  const handleDateChange = (
+    event: DateTimePickerEvent,
+    selectedDate: Date | undefined
+  ) => {
+    if (selectedDate) {
+      setDate(selectedDate);
+      setShowDatePicker(false); 
+      setShowTimePicker(true); 
+    }
+  };
+
+  const handleTimeChange = (
+    event: DateTimePickerEvent,
+    selectedTime: Date | undefined
+  ) => {
+    if (selectedTime) {
+      const newDate = new Date(date!); 
+      newDate.setHours(selectedTime.getHours(), selectedTime.getMinutes());
+      setDate(newDate); 
+    }
+    setShowTimePicker(false); 
   };
 
   return (
@@ -82,15 +108,30 @@ export default function AddTransactionScreen() {
             </ThemedText>
           )}
 
-          {showDatePicker && (
+          {showDatePicker && Platform.OS === "android" && (
+            <DateTimePicker
+              value={date || new Date()}
+              mode="date"
+              display="default"
+              onChange={handleDateChange}
+            />
+          )}
+
+          {showTimePicker && Platform.OS === "android" && (
+            <DateTimePicker
+              value={date || new Date()}
+              mode="time"
+              display="default"
+              onChange={handleTimeChange}
+            />
+          )}
+
+          {showDatePicker && Platform.OS === "ios" && (
             <DateTimePicker
               value={date || new Date()}
               mode="datetime"
-              display={Platform.OS === "ios" ? "spinner" : "default"}
-              onChange={(event, selectedDate) => {
-                setShowDatePicker(false);
-                if (selectedDate) setDate(selectedDate);
-              }}
+              display="spinner"
+              onChange={handleDateChange}
             />
           )}
         </ThemedView>
