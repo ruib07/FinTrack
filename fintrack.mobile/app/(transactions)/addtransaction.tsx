@@ -33,7 +33,7 @@ export default function AddTransactionScreen() {
       amount: Number(amount) ?? 0,
       type,
       payment_method: paymentMethod,
-      date: date!.toISOString(),
+      date: date ?? new Date(),
       note: note || undefined,
       user_id: userId!,
       category_id: categoryId,
@@ -54,8 +54,8 @@ export default function AddTransactionScreen() {
   ) => {
     if (selectedDate) {
       setDate(selectedDate);
-      setShowDatePicker(false); 
-      setShowTimePicker(true); 
+      setShowDatePicker(false);
+      setShowTimePicker(true);
     }
   };
 
@@ -64,11 +64,11 @@ export default function AddTransactionScreen() {
     selectedTime: Date | undefined
   ) => {
     if (selectedTime) {
-      const newDate = new Date(date!); 
+      const newDate = new Date(date!);
       newDate.setHours(selectedTime.getHours(), selectedTime.getMinutes());
-      setDate(newDate); 
+      setDate(newDate);
     }
-    setShowTimePicker(false); 
+    setShowTimePicker(false);
   };
 
   return (

@@ -129,9 +129,7 @@ export default function AddBudgetScreen() {
           style={globalStyles.button}
           onPress={handleBudgetCreation}
         >
-          <ThemedText style={globalStyles.buttonText}>
-            Create Budget
-          </ThemedText>
+          <ThemedText style={globalStyles.buttonText}>Create Budget</ThemedText>
         </TouchableOpacity>
       </ThemedView>
     </ParallaxScrollView>

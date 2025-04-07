@@ -6,6 +6,7 @@ import { GetBudgetsByUser } from "@/services/budgets.service";
 import { GetCategoriesByUser } from "@/services/categories.service";
 import globalStyles from "@/styles/globalStyles";
 import { IBudget } from "@/types/budget";
+import { currencyLabels } from "@/utils/dictionaries";
 import { storage } from "@/utils/storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
@@ -19,6 +20,7 @@ export default function BudgetsScreen() {
     { label: string; value: string }[]
   >([]);
   const [, setError] = useState<string | null>(null);
+  const [currency, setCurrency] = useState<string>("");
 
   const tableBackground = useThemeColor({}, "tableHeader");
   const rowBackground = useThemeColor({}, "tableRow");
@@ -27,6 +29,8 @@ export default function BudgetsScreen() {
     useCallback(() => {
       const fetchBudgets = async () => {
         const userId = await storage.getItem("userId");
+        const storedCurrency = await storage.getItem("currency");
+        setCurrency(storedCurrency || "");
 
         if (!userId) return;
 
@@ -90,7 +94,9 @@ export default function BudgetsScreen() {
               style={{ backgroundColor: rowBackground }}
             >
               <DataTable.Cell>
-                <ThemedText type="table">{budget.limit_amount}</ThemedText>
+                <ThemedText type="table">
+                  {budget.limit_amount} {currencyLabels[currency]}
+                </ThemedText>
               </DataTable.Cell>
               <DataTable.Cell>
                 <ThemedText type="table">

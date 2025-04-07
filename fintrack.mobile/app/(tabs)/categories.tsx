@@ -5,6 +5,7 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { GetCategoriesByUser } from "@/services/categories.service";
 import globalStyles from "@/styles/globalStyles";
 import { ICategory } from "@/types/category";
+import { typeLabels } from "@/utils/dictionaries";
 import { storage } from "@/utils/storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
@@ -84,7 +85,9 @@ export default function CategoriesScreen() {
                 </ThemedText>
               </DataTable.Cell>
               <DataTable.Cell>
-                <ThemedText type="table">{category.type}</ThemedText>
+                <ThemedText type="table">
+                  {typeLabels[category.type]}
+                </ThemedText>
               </DataTable.Cell>
             </DataTable.Row>
           ))}

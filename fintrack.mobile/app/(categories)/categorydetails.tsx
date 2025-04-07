@@ -3,10 +3,16 @@ import { ThemedInput } from "@/components/ThemedInput";
 import { ThemedModal } from "@/components/ThemedModal";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { GetCategoryByID, UpdateCategory } from "@/services/categories.service";
+import {
+  DeleteCategory,
+  GetCategoryByID,
+  UpdateCategory,
+} from "@/services/categories.service";
 import globalStyles from "@/styles/globalStyles";
 import modalStyles from "@/styles/modalStyles";
 import { ICategory } from "@/types/category";
+import { typeLabels } from "@/utils/dictionaries";
+import { router } from "expo-router";
 import { useSearchParams } from "expo-router/build/hooks";
 import { useEffect, useState } from "react";
 import { Alert, Image, Modal, TouchableOpacity, View } from "react-native";
@@ -49,6 +55,29 @@ export default function CategoryDetailsScreen() {
     }
   };
 
+  const handleCategoryRemoval = async (categoryId: string) => {
+    Alert.alert(
+      "Confirm Deletion",
+      "Are you sure that you want to delete this category?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await DeleteCategory(categoryId);
+              router.replace("/(tabs)/categories");
+              Alert.alert("Success", "Category removed successfully.");
+            } catch {
+              Alert.alert("Something went wrong. Please try again.");
+            }
+          },
+        },
+      ]
+    );
+  };
+
   if (!category) {
     return (
       <ThemedText type="subtitle" style={{ textAlign: "center" }}>
@@ -87,20 +116,30 @@ export default function CategoryDetailsScreen() {
 
         <ThemedView style={{ flexDirection: "row", marginBottom: 5 }}>
           <ThemedText type="defaultSemiBold">Type: </ThemedText>
-          <ThemedText type="default">{category.type}</ThemedText>
+          <ThemedText type="default">{typeLabels[category.type]}</ThemedText>
         </ThemedView>
 
-        <TouchableOpacity
-          style={globalStyles.button}
-          onPress={() => {
-            setEditingCategory(category);
-            setModalVisible(true);
-          }}
-        >
-          <ThemedText style={globalStyles.buttonText}>
-            Update Category
-          </ThemedText>
-        </TouchableOpacity>
+        <ThemedView style={{ flexDirection: "row", gap: 10 }}>
+          <TouchableOpacity
+            style={globalStyles.button}
+            onPress={() => {
+              setEditingCategory(category);
+              setModalVisible(true);
+            }}
+          >
+            <ThemedText style={globalStyles.buttonText}>
+              Update Category
+            </ThemedText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={globalStyles.button}
+            onPress={() => handleCategoryRemoval(category.id!)}
+          >
+            <ThemedText style={globalStyles.buttonText}>
+              Remove Category
+            </ThemedText>
+          </TouchableOpacity>
+        </ThemedView>
       </ThemedView>
 
       {modalVisible && editingCategory && (

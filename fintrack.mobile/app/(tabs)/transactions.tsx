@@ -6,9 +6,11 @@ import { GetTransactionsByUser } from "@/services/transactions.service";
 import globalStyles from "@/styles/globalStyles";
 import transactionStyles from "@/styles/transactionStyles";
 import { ITransaction } from "@/types/transaction";
+import { currencyLabels } from "@/utils/dictionaries";
 import { storage } from "@/utils/storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
+import moment from "moment";
 import { useCallback, useState } from "react";
 import { ActivityIndicator, ScrollView, TouchableOpacity } from "react-native";
 
@@ -18,11 +20,14 @@ export default function TransactionsScreen() {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [categories, setCategories] = useState<Record<string, string>>({});
   const [, setError] = useState<string | null>(null);
+  const [currency, setCurrency] = useState<string>("");
 
   useFocusEffect(
     useCallback(() => {
       const fetchTransactions = async () => {
         const userId = await storage.getItem("userId");
+        const storedCurrency = await storage.getItem("currency");
+        setCurrency(storedCurrency || "");
 
         if (!userId) return;
 
@@ -104,9 +109,13 @@ export default function TransactionsScreen() {
                 marginVertical: 5,
                 borderRadius: 8,
               }}
-              //onPress={() => router.push(`/transaction?id=${item.id}`)}
+              onPress={() =>
+                router.push(`/(transactions)/transactiondetails?id=${item.id}`)
+              }
             >
-              <ThemedText type="subtitle">💰 Amount: {item.amount}</ThemedText>
+              <ThemedText type="subtitle">
+                💰 Amount: {item.amount} {currencyLabels[currency]}
+              </ThemedText>
               <ThemedText type="subtitle" style={{ marginTop: 4 }}>
                 📌 Category: {categories[item.category_id] || "Loading..."}
               </ThemedText>
@@ -114,7 +123,7 @@ export default function TransactionsScreen() {
                 ✏️ Note: {item.note || "None"}
               </ThemedText>
               <ThemedText type="subtitle" style={{ marginTop: 4 }}>
-                📅 Date: {new Date(item.date).toLocaleDateString()}
+                📅 Date: {moment(item.date).format("DD/MM/YYYY HH:mm")}
               </ThemedText>
             </TouchableOpacity>
           </ThemedView>

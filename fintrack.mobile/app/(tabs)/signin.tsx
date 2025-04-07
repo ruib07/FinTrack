@@ -32,12 +32,13 @@ export default function SigninScreen() {
     try {
       const signinResponse = await Signin(signin);
       const token = signinResponse.data.token;
-      const userId = signinResponse.data.user.id;
+      const user = signinResponse.data.user;
 
       await storage.setItem("token", token);
-      await storage.setItem("userId", userId);
+      await storage.setItem("userId", user.id);
+      await storage.setItem("currency", user.currency);
 
-      setAuth(userId);
+      setAuth(user.id);
       setEmail("");
       setPassword("");
 
