@@ -1,3 +1,4 @@
+import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedInput } from "@/components/ThemedInput";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -66,7 +67,7 @@ export default function TransactionsScreen() {
       <ThemedView
         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
       >
-        <ActivityIndicator size={"large"} color="#1D3D47" />
+        <ActivityIndicator size={"large"} color="#444444" />
       </ThemedView>
     );
   }
@@ -92,17 +93,13 @@ export default function TransactionsScreen() {
           onChangeText={handleSearch}
           style={{ width: "90%" }}
         />
-        <TouchableOpacity
-          style={[globalStyles.button, { marginBottom: 4 }]}
+        <ThemedButton
+          title="Add Transaction"
           onPress={() => router.push("/(transactions)/addtransaction")}
-        >
-          <ThemedText style={globalStyles.buttonText}>
-            Add Transaction
-          </ThemedText>
-        </TouchableOpacity>
+        />
 
-        {filteredTransactions.map((item) => (
-          <ThemedView style={transactionStyles.container} key={item.id}>
+        {filteredTransactions.map((transaction) => (
+          <ThemedView style={transactionStyles.container} key={transaction.id}>
             <TouchableOpacity
               style={{
                 padding: 15,
@@ -110,20 +107,23 @@ export default function TransactionsScreen() {
                 borderRadius: 8,
               }}
               onPress={() =>
-                router.push(`/(transactions)/transactiondetails?id=${item.id}`)
+                router.push(
+                  `/(transactions)/transactiondetails?id=${transaction.id}`
+                )
               }
             >
               <ThemedText type="subtitle">
-                💰 Amount: {item.amount} {currencyLabels[currency]}
+                💰 Amount: {transaction.amount} {currencyLabels[currency]}
               </ThemedText>
               <ThemedText type="subtitle" style={{ marginTop: 4 }}>
-                📌 Category: {categories[item.category_id] || "Loading..."}
+                📌 Category:{" "}
+                {categories[transaction.category_id] || "Loading..."}
               </ThemedText>
               <ThemedText type="subtitle" style={{ marginTop: 4 }}>
-                ✏️ Note: {item.note || "None"}
+                ✏️ Note: {transaction.note || "None"}
               </ThemedText>
               <ThemedText type="subtitle" style={{ marginTop: 4 }}>
-                📅 Date: {moment(item.date).format("DD/MM/YYYY HH:mm")}
+                📅 Date: {moment(transaction.date).format("DD/MM/YYYY HH:mm")}
               </ThemedText>
             </TouchableOpacity>
           </ThemedView>

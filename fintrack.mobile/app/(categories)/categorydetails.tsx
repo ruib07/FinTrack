@@ -1,4 +1,5 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedInput } from "@/components/ThemedInput";
 import { ThemedModal } from "@/components/ThemedModal";
 import { ThemedText } from "@/components/ThemedText";
@@ -15,7 +16,7 @@ import { typeLabels } from "@/utils/dictionaries";
 import { router } from "expo-router";
 import { useSearchParams } from "expo-router/build/hooks";
 import { useEffect, useState } from "react";
-import { Alert, Image, Modal, TouchableOpacity, View } from "react-native";
+import { Alert, Image, Modal, View } from "react-native";
 
 export default function CategoryDetailsScreen() {
   const [category, setCategory] = useState<ICategory | null>(null);
@@ -88,7 +89,6 @@ export default function CategoryDetailsScreen() {
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
           source={require("@/assets/images/fintrack-banner.jpg")}
@@ -120,25 +120,17 @@ export default function CategoryDetailsScreen() {
         </ThemedView>
 
         <ThemedView style={{ flexDirection: "row", gap: 10 }}>
-          <TouchableOpacity
-            style={globalStyles.button}
+          <ThemedButton
+            title="Update Category"
             onPress={() => {
               setEditingCategory(category);
               setModalVisible(true);
             }}
-          >
-            <ThemedText style={globalStyles.buttonText}>
-              Update Category
-            </ThemedText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={globalStyles.button}
+          />
+          <ThemedButton
+            title="Remove Category"
             onPress={() => handleCategoryRemoval(category.id!)}
-          >
-            <ThemedText style={globalStyles.buttonText}>
-              Remove Category
-            </ThemedText>
-          </TouchableOpacity>
+          />
         </ThemedView>
       </ThemedView>
 
@@ -201,20 +193,12 @@ export default function CategoryDetailsScreen() {
                   justifyContent: "center",
                 }}
               >
-                <TouchableOpacity
-                  style={[globalStyles.button, { backgroundColor: "gray" }]}
+                <ThemedButton
+                  title="Cancel"
+                  style={{ backgroundColor: "gray" }}
                   onPress={() => setModalVisible(false)}
-                >
-                  <ThemedText style={globalStyles.buttonText}>
-                    Cancel
-                  </ThemedText>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={globalStyles.button}
-                  onPress={handleCategoryUpdate}
-                >
-                  <ThemedText style={globalStyles.buttonText}>Save</ThemedText>
-                </TouchableOpacity>
+                />
+                <ThemedButton title="Save" onPress={handleCategoryUpdate} />
               </ThemedView>
             </ThemedView>
           </View>

@@ -1,4 +1,5 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedInput } from "@/components/ThemedInput";
 import { ThemedModal } from "@/components/ThemedModal";
 import { ThemedText } from "@/components/ThemedText";
@@ -13,7 +14,7 @@ import { storage } from "@/utils/storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useCallback, useState } from "react";
-import { Alert, TouchableOpacity } from "react-native";
+import { Alert } from "react-native";
 
 export default function ProfileScreen() {
   const [user, setUser] = useState<IUser>();
@@ -120,7 +121,6 @@ export default function ProfileScreen() {
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       headerImage={
         <IconSymbol
           size={310}
@@ -171,8 +171,8 @@ export default function ProfileScreen() {
       <ThemedView style={globalStyles.container}>
         <ThemedView style={{ flexDirection: "row", gap: 10 }}>
           {isEditing && (
-            <TouchableOpacity
-              style={[globalStyles.button, { flex: 1 }]}
+            <ThemedButton
+              title="Save Changes"
               onPress={() =>
                 handleUserUpdate(user?.id || "", {
                   name: editableName,
@@ -180,55 +180,34 @@ export default function ProfileScreen() {
                   currency: editableCurrency,
                 })
               }
-            >
-              <ThemedText style={globalStyles.buttonText}>
-                Save Changes
-              </ThemedText>
-            </TouchableOpacity>
+            />
           )}
 
           {isEditing && (
-            <TouchableOpacity
-              style={[
-                globalStyles.button,
-                { flex: 1, backgroundColor: "gray" },
-              ]}
+            <ThemedButton
+              title="Cancel"
+              style={{ flex: 1, backgroundColor: "gray" }}
               onPress={handleCancelEdit}
-            >
-              <ThemedText style={globalStyles.buttonText}>Cancel</ThemedText>
-            </TouchableOpacity>
+            />
           )}
 
           {!isEditing && (
-            <TouchableOpacity
-              style={globalStyles.button}
+            <ThemedButton
+              title="Edit Information"
               onPress={() => setIsEditing(true)}
-            >
-              <ThemedText style={globalStyles.buttonText}>
-                Edit Information
-              </ThemedText>
-            </TouchableOpacity>
+            />
           )}
         </ThemedView>
         <ThemedView
           style={{ flexDirection: "row", gap: 20, justifyContent: "center" }}
         >
-          <TouchableOpacity
-            style={[globalStyles.button, { flex: 1 }]}
-            onPress={handleSignout}
-          >
-            <ThemedText style={globalStyles.buttonText}>Sign out</ThemedText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[globalStyles.button, { flex: 1 }]}
+          <ThemedButton title="Sign Out" onPress={handleSignout} />
+          <ThemedButton
+            title="Remove Account"
             onPress={() => {
               handleAccountDeletion(user!.id!);
             }}
-          >
-            <ThemedText style={globalStyles.buttonText}>
-              Remove Account
-            </ThemedText>
-          </TouchableOpacity>
+          />
         </ThemedView>
       </ThemedView>
     </ParallaxScrollView>

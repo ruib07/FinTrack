@@ -8,6 +8,7 @@ const MAPPING = {
   "person.fill": "person",
   "folder.fill": "folder",
   "dollarsign.circle.fill": "attach-money",
+  analytics: "analytics",
   "lock.fill": "lock",
   "paperplane.fill": "send",
   "chevron.left.forwardslash.chevron.right": "code",

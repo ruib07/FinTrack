@@ -1,4 +1,5 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedInput } from "@/components/ThemedInput";
 import { ThemedModal } from "@/components/ThemedModal";
 import { ThemedText } from "@/components/ThemedText";
@@ -11,13 +12,14 @@ import globalStyles from "@/styles/globalStyles";
 import { IBudget } from "@/types/budget";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { router } from "expo-router";
+import moment from "moment";
 import { useState } from "react";
-import { Alert, Button, Image, Platform, TouchableOpacity } from "react-native";
+import { Alert, Image, Platform, TouchableOpacity } from "react-native";
 
 export default function AddBudgetScreen() {
   const [limitAmount, setLimitAmount] = useState<string>();
-  const [startDate, setStartDate] = useState<Date>();
-  const [endDate, setEndDate] = useState<Date>();
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
   const [categoryId, setCategoryId] = useState("");
   const [showStartDatePicker, setShowStartDatePicker] = useState(false);
   const [showEndDatePicker, setShowEndDatePicker] = useState(false);
@@ -25,15 +27,10 @@ export default function AddBudgetScreen() {
   const { categories } = useCategoriesByUser(userId);
 
   const handleBudgetCreation = async () => {
-    const startFormatted = startDate
-      ? startDate.toISOString().split("T")[0]
-      : "";
-    const endFormatted = endDate ? endDate.toISOString().split("T")[0] : "";
-
     const newBudget: IBudget = {
       limit_amount: Number(limitAmount),
-      start_date: startFormatted,
-      end_date: endFormatted,
+      start_date: startDate.toISOString(),
+      end_date: endDate.toISOString(),
       user_id: userId!,
       category_id: categoryId,
     };
@@ -49,7 +46,6 @@ export default function AddBudgetScreen() {
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
           source={require("@/assets/images/fintrack-banner.jpg")}
@@ -71,17 +67,16 @@ export default function AddBudgetScreen() {
             value={limitAmount}
             placeholder="Limit Amount"
           />
-          <Button
-            title="Select Start Date"
+
+          <ThemedText type="default" style={{ marginTop: 8 }}>
+            Start Date:
+          </ThemedText>
+          <TouchableOpacity
             onPress={() => setShowStartDatePicker(true)}
-          />
-
-          {startDate && (
-            <ThemedText style={{ marginVertical: 10 }}>
-              Date: {startDate.toLocaleDateString()}
-            </ThemedText>
-          )}
-
+            style={formStyles.dateInputButton}
+          >
+            <ThemedText>{moment(startDate).format("D/M/YYYY")}</ThemedText>
+          </TouchableOpacity>
           {showStartDatePicker && (
             <DateTimePicker
               value={startDate || new Date()}
@@ -94,16 +89,15 @@ export default function AddBudgetScreen() {
             />
           )}
 
-          <Button
-            title="Select End Date"
+          <ThemedText type="default" style={{ marginTop: 8 }}>
+            End Date:
+          </ThemedText>
+          <TouchableOpacity
             onPress={() => setShowEndDatePicker(true)}
-          />
-
-          {endDate && (
-            <ThemedText style={{ marginVertical: 10 }}>
-              Date: {endDate.toLocaleDateString()}
-            </ThemedText>
-          )}
+            style={formStyles.dateInputButton}
+          >
+            <ThemedText>{moment(endDate).format("D/M/YYYY")}</ThemedText>
+          </TouchableOpacity>
 
           {showEndDatePicker && (
             <DateTimePicker
@@ -125,12 +119,7 @@ export default function AddBudgetScreen() {
           onValueChange={(itemValue) => setCategoryId(itemValue)}
           items={categories}
         />
-        <TouchableOpacity
-          style={globalStyles.button}
-          onPress={handleBudgetCreation}
-        >
-          <ThemedText style={globalStyles.buttonText}>Create Budget</ThemedText>
-        </TouchableOpacity>
+        <ThemedButton title="Create Budget" onPress={handleBudgetCreation} />
       </ThemedView>
     </ParallaxScrollView>
   );

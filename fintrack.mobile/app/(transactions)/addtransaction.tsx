@@ -1,4 +1,5 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedInput } from "@/components/ThemedInput";
 import { ThemedModal } from "@/components/ThemedModal";
 import { ThemedText } from "@/components/ThemedText";
@@ -13,14 +14,15 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 import { router } from "expo-router";
+import moment from "moment";
 import { useState } from "react";
-import { Alert, Button, Image, Platform, TouchableOpacity } from "react-native";
+import { Alert, Image, Platform, TouchableOpacity } from "react-native";
 
 export default function AddTransactionScreen() {
   const [amount, setAmount] = useState<string>();
   const [type, setType] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [date, setDate] = useState<Date>();
+  const [date, setDate] = useState<Date>(new Date());
   const [note, setNote] = useState<string | null>(null);
   const [categoryId, setCategoryId] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -33,7 +35,7 @@ export default function AddTransactionScreen() {
       amount: Number(amount) ?? 0,
       type,
       payment_method: paymentMethod,
-      date: date ?? new Date(),
+      date: date,
       note: note || undefined,
       user_id: userId!,
       category_id: categoryId,
@@ -73,7 +75,6 @@ export default function AddTransactionScreen() {
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
           source={require("@/assets/images/fintrack-banner.jpg")}
@@ -100,13 +101,16 @@ export default function AddTransactionScreen() {
             placeholder="Note (optional)"
             value={note ?? ""}
           />
-          <Button title="Select Date" onPress={() => setShowDatePicker(true)} />
 
-          {date && (
-            <ThemedText style={{ marginVertical: 10 }}>
-              Date: {date.toLocaleString()}
-            </ThemedText>
-          )}
+          <ThemedText type="default" style={{ marginTop: 8 }}>
+            Date:
+          </ThemedText>
+          <TouchableOpacity
+            onPress={() => setShowDatePicker(true)}
+            style={formStyles.dateInputButton}
+          >
+            <ThemedText>{moment(date).format("D/M/YYYY HH:mm")}</ThemedText>
+          </TouchableOpacity>
 
           {showDatePicker && Platform.OS === "android" && (
             <DateTimePicker
@@ -169,14 +173,10 @@ export default function AddTransactionScreen() {
           onValueChange={(itemValue) => setCategoryId(itemValue)}
           items={categories}
         />
-        <TouchableOpacity
-          style={globalStyles.button}
+        <ThemedButton
+          title="Create Transaction"
           onPress={handleTransactionCreation}
-        >
-          <ThemedText style={globalStyles.buttonText}>
-            Create Transaction
-          </ThemedText>
-        </TouchableOpacity>
+        />
       </ThemedView>
     </ParallaxScrollView>
   );

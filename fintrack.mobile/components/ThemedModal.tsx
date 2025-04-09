@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import ModalSelector from "react-native-modal-selector";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
+import globalStyles from "@/styles/globalStyles";
 
 export type ThemedModalProps = {
   selectedValue: string;
@@ -33,7 +34,13 @@ export function ThemedModal({
           alignItems: "center",
         }}
         optionContainerStyle={{
-          maxHeight: 350,
+          maxHeight: 150,
+        }}
+        cancelStyle={{
+          paddingVertical: 12,
+          paddingHorizontal: 20,
+          borderRadius: 8,
+          alignSelf: "center",
         }}
       >
         <ThemedView

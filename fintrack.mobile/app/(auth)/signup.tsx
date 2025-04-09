@@ -1,4 +1,5 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedInput } from "@/components/ThemedInput";
 import { ThemedModal } from "@/components/ThemedModal";
 import { ThemedText } from "@/components/ThemedText";
@@ -33,7 +34,7 @@ export default function SignupScreen() {
 
     try {
       await Signup(newUser);
-      router.push("/signin");
+      router.push("/(tabs)/languageselector");
     } catch {
       Alert.alert("Something went wrong.");
     }
@@ -41,7 +42,6 @@ export default function SignupScreen() {
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
           source={require("@/assets/images/fintrack-banner.jpg")}
@@ -93,11 +93,7 @@ export default function SignupScreen() {
             ]}
           />
         </ThemedView>
-        <TouchableOpacity style={globalStyles.button} onPress={handleSignup}>
-          <ThemedText style={globalStyles.buttonText}>
-            Create Account
-          </ThemedText>
-        </TouchableOpacity>
+        <ThemedButton title="Create Account" onPress={handleSignup} />
         <ThemedView
           style={{ marginTop: 8, flexDirection: "row", alignItems: "center" }}
         >

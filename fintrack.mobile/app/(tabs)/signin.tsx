@@ -1,4 +1,5 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedInput } from "@/components/ThemedInput";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -50,7 +51,6 @@ export default function SigninScreen() {
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
           source={require("@/assets/images/fintrack-banner.jpg")}
@@ -96,18 +96,14 @@ export default function SigninScreen() {
             marginBottom: 15,
           }}
         >
-          <TouchableOpacity onPress={() => router.push("/")}>
-            <ThemedText
-              type="link"
-              onPress={() => router.push("/(auth)/recoverpassword")}
-            >
-              Forgot Password?
-            </ThemedText>
-          </TouchableOpacity>
+          <ThemedText
+            type="link"
+            onPress={() => router.push("/(auth)/recoverpassword")}
+          >
+            Forgot Password?
+          </ThemedText>
         </ThemedView>
-        <TouchableOpacity style={globalStyles.button} onPress={handleSignin}>
-          <ThemedText style={globalStyles.buttonText}>Sign in</ThemedText>
-        </TouchableOpacity>
+        <ThemedButton title="Sign In" onPress={handleSignin} />
         <ThemedView
           style={{ marginTop: 8, flexDirection: "row", alignItems: "center" }}
         >

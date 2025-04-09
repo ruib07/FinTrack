@@ -1,4 +1,5 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useThemeColor } from "@/hooks/useThemeColor";
@@ -10,7 +11,7 @@ import { storage } from "@/utils/storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useCallback, useState } from "react";
-import { Image, TouchableOpacity } from "react-native";
+import { Image } from "react-native";
 import { DataTable } from "react-native-paper";
 
 export default function CategoriesScreen() {
@@ -41,7 +42,6 @@ export default function CategoriesScreen() {
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
           source={require("@/assets/images/fintrack-banner.jpg")}
@@ -51,19 +51,21 @@ export default function CategoriesScreen() {
     >
       <ThemedView style={globalStyles.stepContainer}>
         <ThemedText type="subtitle">Categories</ThemedText>
-        <TouchableOpacity
-          style={[globalStyles.button, { marginBottom: 4 }]}
+        <ThemedButton
+          title="Add Category"
           onPress={() => router.push("/(categories)/addcategory")}
-        >
-          <ThemedText style={globalStyles.buttonText}>Add Category</ThemedText>
-        </TouchableOpacity>
-        <DataTable>
+        />
+        <DataTable style={{ marginTop: 10 }}>
           <DataTable.Header style={{ backgroundColor: tableBackground }}>
             <DataTable.Title>
-              <ThemedText type="table">Name</ThemedText>
+              <ThemedText type="table" style={{ color: "#fff" }}>
+                Name
+              </ThemedText>
             </DataTable.Title>
             <DataTable.Title>
-              <ThemedText type="table">Type</ThemedText>
+              <ThemedText type="table" style={{ color: "#fff" }}>
+                Type
+              </ThemedText>
             </DataTable.Title>
           </DataTable.Header>
 

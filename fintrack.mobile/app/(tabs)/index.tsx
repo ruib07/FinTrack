@@ -63,13 +63,12 @@ export default function HomeScreen() {
   );
 
   const pieData = [
-    { x: "Expenses", y: totalExpenses, color: "#1D3D47" },
-    { x: "Incomes", y: totalIncomes, color: "#A1CEDC" },
+    { x: "Expenses", y: totalExpenses, color: "#ff0000" },
+    { x: "Incomes", y: totalIncomes, color: "#008000" },
   ];
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
           source={require("@/assets/images/fintrack-banner.jpg")}
@@ -77,11 +76,6 @@ export default function HomeScreen() {
         />
       }
     >
-      <ThemedView style={globalStyles.titleContainer}>
-        <ThemedText type="title">Welcome {user?.name}!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-
       {!user ? (
         <ThemedText type="subtitle" style={{ textAlign: "center" }}>
           Need to authenticate!
@@ -140,7 +134,7 @@ export default function HomeScreen() {
                     <Bar
                       points={points.totalamount}
                       chartBounds={chartBounds}
-                      color="#1D3D47"
+                      color="#ff0000"
                     />
                   )}
                 </CartesianChart>
@@ -162,7 +156,7 @@ export default function HomeScreen() {
                   {({ points }) => (
                     <Line
                       points={points.totalamount}
-                      color="#1D3D47"
+                      color="#008000"
                       strokeWidth={3}
                     />
                   )}

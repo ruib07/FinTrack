@@ -1,4 +1,5 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useThemeColor } from "@/hooks/useThemeColor";
@@ -11,7 +12,7 @@ import { storage } from "@/utils/storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useCallback, useState } from "react";
-import { Image, TouchableOpacity } from "react-native";
+import { Image } from "react-native";
 import { DataTable } from "react-native-paper";
 
 export default function BudgetsScreen() {
@@ -62,7 +63,6 @@ export default function BudgetsScreen() {
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
           source={require("@/assets/images/fintrack-banner.jpg")}
@@ -72,19 +72,21 @@ export default function BudgetsScreen() {
     >
       <ThemedView style={globalStyles.stepContainer}>
         <ThemedText type="subtitle">Budgets</ThemedText>
-        <TouchableOpacity
-          style={[globalStyles.button, { marginBottom: 4 }]}
+        <ThemedButton
+          title="Add Budget"
           onPress={() => router.push("/(budgets)/addbudget")}
-        >
-          <ThemedText style={globalStyles.buttonText}>Add Budget</ThemedText>
-        </TouchableOpacity>
-        <DataTable>
+        />
+        <DataTable style={{ marginTop: 10 }}>
           <DataTable.Header style={{ backgroundColor: tableBackground }}>
             <DataTable.Title>
-              <ThemedText type="table">Limit Amount</ThemedText>
+              <ThemedText type="table" style={{ color: "#fff" }}>
+                Limit Amount
+              </ThemedText>
             </DataTable.Title>
             <DataTable.Title>
-              <ThemedText type="table">Category</ThemedText>
+              <ThemedText type="table" style={{ color: "#fff" }}>
+                Category
+              </ThemedText>
             </DataTable.Title>
           </DataTable.Header>
 
@@ -94,7 +96,12 @@ export default function BudgetsScreen() {
               style={{ backgroundColor: rowBackground }}
             >
               <DataTable.Cell>
-                <ThemedText type="table">
+                <ThemedText
+                  type="table"
+                  onPress={() =>
+                    router.push(`/(budgets)/budgetdetails?id=${budget.id}`)
+                  }
+                >
                   {budget.limit_amount} {currencyLabels[currency]}
                 </ThemedText>
               </DataTable.Cell>

@@ -13,4 +13,11 @@ export default StyleSheet.create({
     position: "absolute",
     right: 10,
   },
+  dateInputButton: {
+    padding: 10,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 6,
+    marginBottom: 8,
+  },
 });

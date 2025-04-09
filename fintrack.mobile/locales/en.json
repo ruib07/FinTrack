@@ -1,0 +1,10 @@
+{
+  "translation": {
+    "name": "Name",
+    "welcome": "Welcome",
+    "choose": "Select a language",
+    "portuguese": "Portuguese",
+    "english": "English",
+    "languageSelection": "Select"
+  }
+}

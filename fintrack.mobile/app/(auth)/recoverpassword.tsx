@@ -1,4 +1,5 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedInput } from "@/components/ThemedInput";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -8,7 +9,7 @@ import globalStyles from "@/styles/globalStyles";
 import { ISendEmail } from "@/types/resetPassword";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Alert, Image, TouchableOpacity } from "react-native";
+import { Alert, Image } from "react-native";
 
 export default function RecoverPasswordScreen() {
   const [email, setEmail] = useState("");
@@ -27,7 +28,6 @@ export default function RecoverPasswordScreen() {
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
           source={require("@/assets/images/fintrack-banner.jpg")}
@@ -47,12 +47,7 @@ export default function RecoverPasswordScreen() {
             keyboardType="email-address"
           />
         </ThemedView>
-        <TouchableOpacity
-          style={globalStyles.button}
-          onPress={handleEmailRequest}
-        >
-          <ThemedText style={globalStyles.buttonText}>Send Email</ThemedText>
-        </TouchableOpacity>
+        <ThemedButton title="Send Email" onPress={handleEmailRequest} />
       </ThemedView>
     </ParallaxScrollView>
   );

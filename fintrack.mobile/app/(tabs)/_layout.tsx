@@ -44,6 +44,13 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
+        name="languageselector"
+        options={{
+          title: "Language Selector",
+          href: null,
+        }}
+      />
+      <Tabs.Screen
         name="index"
         options={{
           title: "Home",
@@ -78,7 +85,11 @@ export default function TabLayout() {
           title: "Budgets",
           href: isAuthenticated ? undefined : null,
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="target" color={color} />
+            <IconSymbol
+              size={28}
+              name={Platform.OS === "ios" ? "target" : "analytics"}
+              color={color}
+            />
           ),
         }}
       />
