@@ -14,9 +14,11 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { router } from "expo-router";
 import moment from "moment";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, Image, Platform, TouchableOpacity } from "react-native";
 
 export default function AddBudgetScreen() {
+  const { t } = useTranslation();
   const [limitAmount, setLimitAmount] = useState<string>();
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
@@ -37,10 +39,10 @@ export default function AddBudgetScreen() {
 
     try {
       await CreateBudget(newBudget);
-      Alert.alert("Budget created successfully.");
+      Alert.alert(t("addBudgetSuccess"));
       router.push("/(tabs)/budgets");
     } catch {
-      Alert.alert("Something went wrong.");
+      Alert.alert(t("messages.errorMessage"));
     }
   };
 
@@ -55,7 +57,7 @@ export default function AddBudgetScreen() {
     >
       <ThemedView style={globalStyles.container}>
         <ThemedText type="title" style={{ marginBottom: 10 }}>
-          Budget Creation
+          {t("budgetCreation")}
         </ThemedText>
         <ThemedView style={formStyles.formField}>
           <ThemedInput
@@ -65,11 +67,11 @@ export default function AddBudgetScreen() {
               setLimitAmount(cleanValue);
             }}
             value={limitAmount}
-            placeholder="Limit Amount"
+            placeholder={t("labels.limitAmount")}
           />
 
           <ThemedText type="default" style={{ marginTop: 8 }}>
-            Start Date:
+            {t("labels.startDate")}:
           </ThemedText>
           <TouchableOpacity
             onPress={() => setShowStartDatePicker(true)}
@@ -90,7 +92,7 @@ export default function AddBudgetScreen() {
           )}
 
           <ThemedText type="default" style={{ marginTop: 8 }}>
-            End Date:
+            {t("labels.endDate")}:
           </ThemedText>
           <TouchableOpacity
             onPress={() => setShowEndDatePicker(true)}
@@ -112,14 +114,17 @@ export default function AddBudgetScreen() {
           )}
         </ThemedView>
         <ThemedText type="default" style={{ marginBottom: 8 }}>
-          Choose a category:
+          {t("selection.chooseCategory")}
         </ThemedText>
         <ThemedModal
           selectedValue={categoryId}
           onValueChange={(itemValue) => setCategoryId(itemValue)}
           items={categories}
         />
-        <ThemedButton title="Create Budget" onPress={handleBudgetCreation} />
+        <ThemedButton
+          title={t("createBudget")}
+          onPress={handleBudgetCreation}
+        />
       </ThemedView>
     </ParallaxScrollView>
   );

@@ -5,18 +5,16 @@ import { GetCategoryByID } from "@/services/categories.service";
 import { GetTransactionByID } from "@/services/transactions.service";
 import globalStyles from "@/styles/globalStyles";
 import { ITransaction } from "@/types/transaction";
-import {
-  currencyLabels,
-  paymentMethodLabels,
-  typeLabels,
-} from "@/utils/dictionaries";
+import { currencyLabels, paymentMethodLabels } from "@/utils/dictionaries";
 import { storage } from "@/utils/storage";
 import { useSearchParams } from "expo-router/build/hooks";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Image } from "react-native";
 
 export default function TransactionDetailsScreen() {
+  const { t } = useTranslation();
   const [transaction, setTransaction] = useState<ITransaction | null>(null);
   const [categoryName, setCategoryName] = useState<string | null>(null);
   const [, setError] = useState<string | null>(null);
@@ -51,7 +49,7 @@ export default function TransactionDetailsScreen() {
   if (!transaction) {
     return (
       <ThemedText type="subtitle" style={{ textAlign: "center" }}>
-        Loading...
+        {t("messages.loading")}
       </ThemedText>
     );
   }
@@ -67,41 +65,53 @@ export default function TransactionDetailsScreen() {
     >
       <ThemedView style={globalStyles.container}>
         <ThemedText type="title" style={{ marginBottom: 20 }}>
-          Transaction Details
+          {t("transactionDetails")}
         </ThemedText>
         <ThemedView style={{ flexDirection: "row", marginBottom: 5 }}>
-          <ThemedText type="defaultSemiBold">💰 Amount: </ThemedText>
+          <ThemedText type="defaultSemiBold">
+            💰 {t("labels.amount")}:{" "}
+          </ThemedText>
           <ThemedText type="default">
             {transaction.amount} {currencyLabels[currency]}
           </ThemedText>
         </ThemedView>
 
         <ThemedView style={{ flexDirection: "row", marginBottom: 5 }}>
-          <ThemedText type="defaultSemiBold">🔄 Type: </ThemedText>
-          <ThemedText type="default">{typeLabels[transaction.type]}</ThemedText>
+          <ThemedText type="defaultSemiBold">
+            🔄 {t("labels.type")}:{" "}
+          </ThemedText>
+          <ThemedText type="default">
+            {t(`types.${transaction.type}`)}
+          </ThemedText>
         </ThemedView>
 
         <ThemedView style={{ flexDirection: "row", marginBottom: 5 }}>
-          <ThemedText type="defaultSemiBold">💳 Payment Method: </ThemedText>
+          <ThemedText type="defaultSemiBold">
+            💳 {t("labels.paymentMethod")}:{" "}
+          </ThemedText>
           <ThemedText type="default">
             {paymentMethodLabels[transaction.payment_method]}
           </ThemedText>
         </ThemedView>
 
         <ThemedView style={{ flexDirection: "row", marginBottom: 5 }}>
-          <ThemedText type="defaultSemiBold">📅 Date: </ThemedText>
+          <ThemedText type="defaultSemiBold">
+            📅 {t("labels.date")}:{" "}
+          </ThemedText>
           <ThemedText type="default">
             {moment(transaction.date).format("DD/MM/YYYY HH:mm")}
           </ThemedText>
         </ThemedView>
 
         <ThemedView style={{ flexDirection: "row", marginBottom: 5 }}>
-          <ThemedText type="defaultSemiBold">✏️ Note: </ThemedText>
+          <ThemedText type="defaultSemiBold">
+            ✏️ {t("labels.note")}:{" "}
+          </ThemedText>
           <ThemedText type="default">{transaction.note || "None"}</ThemedText>
         </ThemedView>
 
         <ThemedView style={{ flexDirection: "row", marginBottom: 5 }}>
-          <ThemedText type="defaultSemiBold">📌 Category: </ThemedText>
+          <ThemedText type="defaultSemiBold">📌 {t("category")}: </ThemedText>
           <ThemedText type="default">{categoryName}</ThemedText>
         </ThemedView>
       </ThemedView>

@@ -1,10 +1,117 @@
 {
   "translation": {
-    "name": "Nome",
+    "_languageScreen": "=== Language Selector ===",
     "welcome": "Bem-Vindo",
     "choose": "Selecione um idioma",
     "portuguese": "Português",
     "english": "Inglês",
-    "languageSelection": "Selecionar"
+
+    "_tabs": "=== Tabs Layout ===",
+    "home": "Início",
+    "categories": "Categorias",
+    "transactions": "Transações",
+    "budgets": "Orçamentos",
+    "profile": "Perfil",
+
+    "_homeScreen": "=== Home ===",
+    "needAuth": "Precisa de autenticação!",
+    "expenses": "Despesas",
+    "incomes": "Receitas",
+    "expensesVsIncomes": "Despesas vs Receitas",
+    "expensesForYear": "Despesas do ano {{year}}",
+    "incomesForYear": "Receitas do ano {{year}}",
+    "noData": "Sem dados disponíveis para o ano.",
+
+    "_categoriesScreen": "=== Categories ===",
+    "addCategory": "Adicionar Categoria",
+    "categoryIcon": "Ícone",
+
+    "_addCategoriesScreen": "=== Add Categories ===",
+    "categoryCreation": "Criação de Categoria",
+    "createCategory": "Criar Categoria",
+    "addCategorySuccess": "Categoria criada com sucesso.",
+
+    "_categoryDetailsScreen": "=== Category Details ===",
+    "categoryUpdated": "Categoria atualizada com sucesso.",
+    "errorCategoryUpdate": "Erro a atualizar categoria.",
+    "confirmCategoryDeletionMessage": "Tem a certeza que deseja remover esta categoria?",
+    "categoryRemoved": "Categoria removida com sucesso.",
+    "updateCategory": "Atualizar Categoria",
+    "removeCategory": "Remover Categoria",
+    "editCategory": "Editar Categoria",
+
+    "_transactionsScreen": "=== Transactions ===",
+    "addTransaction": "Adicionar Transação",
+    "searchTransaction": "Pesquisar por categoria",
+
+    "_addTransactionsScreen": "=== Add Transactions ===",
+    "transactionCreation": "Criação de Transação",
+    "createTransaction": "Criar Transação",
+    "addTransactionSuccess": "Transação criada com sucesso.",
+
+    "_transactionDetailsScreen": "=== Transaction Details ===",
+    "transactionDetails": "Detalhes da Transação",
+
+    "_budgetsScreen": "=== Budgets ===",
+    "addBudget": "Adicionar Orçamento",
+
+    "_addBudgetsScreen": "=== Add Budgets ===",
+    "budgetCreation": "Criação de Orçamento",
+    "createBudget": "Criar Orçamento",
+    "addBudgetSuccess": "Orçamento criado com sucesso.",
+
+    "_budgetDetailsScreen": "=== Budget Details ===",
+    "budgetDetails": "Detalhes do Orçamento",
+    "budgetUpdated": "Orçamento atualizado com sucesso.",
+    "errorBudgetUpdate": "Erro a atualizar orçamento.",
+    "confirmBudgetDeletionMessage": "Tem a certeza que deseja remover este orçamento?",
+    "budgetRemoved": "Orçamento removido com sucesso.",
+    "updateBudget": "Atualizar Orçamento",
+    "removeBudget": "Remover Orçamento",
+    "editBudget": "Editar Orçamento",
+
+    "_shared": "=== Shared ===",
+    "messages": {
+      "success": "Sucesso",
+      "errorMessage": "Algo deu errado.",
+      "tryAgain": "Por favor tente novamente.",
+      "loading": "A carregar...",
+      "confirmDeletion": "Confirmar Remoção"
+    },
+    "actions": {
+      "cancel": "Cancelar",
+      "delete": "Remover",
+      "save": "Guardar"
+    },
+    "labels": {
+      "name": "Nome",
+      "type": "Tipo",
+      "amount": "Montante",
+      "note": "Nota",
+      "date": "Data",
+      "paymentMethod": "Método de Pagamento",
+      "limitAmount": "Montante Limite",
+      "startDate": "Data de Início",
+      "endDate": "Data de Fim"
+    },
+    "selection": {
+      "chooseType": "Escolha o tipo:",
+      "choosePaymentMethod": "Selecione um método de pagamento:",
+      "chooseCategory": "Selecione uma categoria:",
+      "typeSelection": "Selecione o tipo...",
+      "paymentMethodSelection": "Selecione o método de pagamento...",
+      "choose": "Selecionar"
+    },
+    "paymentMethods": {
+      "creditCard": "Cartão de Crédito",
+      "debitCard": "Cartão de Débito",
+      "cash": "Dinheiro"
+    },
+    "types": {
+      "expense": "Despesa",
+      "income": "Receita"
+    },
+    "optional": "(opcional)",
+    "category": "Categoria"
   }
 }

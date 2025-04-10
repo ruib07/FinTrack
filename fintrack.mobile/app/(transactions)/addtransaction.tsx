@@ -16,9 +16,11 @@ import DateTimePicker, {
 import { router } from "expo-router";
 import moment from "moment";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, Image, Platform, TouchableOpacity } from "react-native";
 
 export default function AddTransactionScreen() {
+  const { t } = useTranslation();
   const [amount, setAmount] = useState<string>();
   const [type, setType] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -43,10 +45,10 @@ export default function AddTransactionScreen() {
 
     try {
       await CreateTransaction(newTransaction);
-      Alert.alert("Transaction created successfully.");
+      Alert.alert(t("addTransactionSuccess"));
       router.push("/(tabs)/transactions");
     } catch {
-      Alert.alert("Something went wrong.");
+      Alert.alert(t("messages.errorMessage"));
     }
   };
 
@@ -84,7 +86,7 @@ export default function AddTransactionScreen() {
     >
       <ThemedView style={globalStyles.container}>
         <ThemedText type="title" style={{ marginBottom: 10 }}>
-          Transaction Creation
+          {t("transactionCreation")}
         </ThemedText>
         <ThemedView style={formStyles.formField}>
           <ThemedInput
@@ -94,16 +96,16 @@ export default function AddTransactionScreen() {
               setAmount(cleanValue);
             }}
             value={amount}
-            placeholder="Amount"
+            placeholder={t("labels.amount")}
           />
           <ThemedInput
             onChangeText={setNote}
-            placeholder="Note (optional)"
+            placeholder={t("labels.note") + " " + t("optional")}
             value={note ?? ""}
           />
 
           <ThemedText type="default" style={{ marginTop: 8 }}>
-            Date:
+            {t("labels.date")}:
           </ThemedText>
           <TouchableOpacity
             onPress={() => setShowDatePicker(true)}
@@ -140,33 +142,33 @@ export default function AddTransactionScreen() {
           )}
         </ThemedView>
         <ThemedText type="default" style={{ marginBottom: 8 }}>
-          Choose your type:
+          {t("selection.chooseType")}
         </ThemedText>
         <ThemedModal
           selectedValue={type}
           onValueChange={(itemValue) => setType(itemValue)}
           items={[
-            { label: "Select a type...", value: "" },
-            { label: "Income", value: "income" },
-            { label: "Expense", value: "expense" },
+            { label: t("selection.typeSelection"), value: "" },
+            { label: t("types.income"), value: "income" },
+            { label: t("types.expense"), value: "expense" },
           ]}
         />
         <ThemedText type="default" style={{ marginTop: 8, marginBottom: 8 }}>
-          Choose payment method:
+          {t("selection.choosePaymentMethod")}
         </ThemedText>
         <ThemedModal
           selectedValue={paymentMethod}
           onValueChange={(itemValue) => setPaymentMethod(itemValue)}
           items={[
-            { label: "Select a payment method...", value: "" },
-            { label: "Credit Card", value: "credit" },
-            { label: "Debit Card", value: "debit" },
+            { label: t("selection.paymentMethodSelection"), value: "" },
+            { label: t("paymentMethods.creditCard"), value: "credit" },
+            { label: t("paymentMethods.debitCard"), value: "debit" },
             { label: "MB Way", value: "mbway" },
-            { label: "Cash", value: "cash" },
+            { label: t("paymentMethods.cash"), value: "cash" },
           ]}
         />
         <ThemedText type="default" style={{ marginTop: 8, marginBottom: 8 }}>
-          Choose a category:
+          {t("selection.chooseCategory")}
         </ThemedText>
         <ThemedModal
           selectedValue={categoryId}
@@ -174,7 +176,7 @@ export default function AddTransactionScreen() {
           items={categories}
         />
         <ThemedButton
-          title="Create Transaction"
+          title={t("createTransaction")}
           onPress={handleTransactionCreation}
         />
       </ThemedView>

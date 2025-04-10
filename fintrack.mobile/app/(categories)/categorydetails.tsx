@@ -12,13 +12,14 @@ import {
 import globalStyles from "@/styles/globalStyles";
 import modalStyles from "@/styles/modalStyles";
 import { ICategory } from "@/types/category";
-import { typeLabels } from "@/utils/dictionaries";
 import { router } from "expo-router";
 import { useSearchParams } from "expo-router/build/hooks";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, Image, Modal, View } from "react-native";
 
 export default function CategoryDetailsScreen() {
+  const { t } = useTranslation();
   const [category, setCategory] = useState<ICategory | null>(null);
   const [, setError] = useState<string | null>(null);
   const [editingCategory, setEditingCategory] = useState<ICategory | null>(
@@ -50,28 +51,28 @@ export default function CategoryDetailsScreen() {
       await UpdateCategory(editingCategory.id!, editingCategory);
       setCategory(editingCategory);
       setModalVisible(false);
-      Alert.alert("Category updated successfully.");
+      Alert.alert(t("categoryUpdated"));
     } catch {
-      Alert.alert("Error updating category.");
+      Alert.alert(t("errorCategoryUpdate"));
     }
   };
 
   const handleCategoryRemoval = async (categoryId: string) => {
     Alert.alert(
-      "Confirm Deletion",
-      "Are you sure that you want to delete this category?",
+      t("messages.confirmDeletion"),
+      t("confirmCategoryDeletionMessage"),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("actions.cancel"), style: "cancel" },
         {
-          text: "Delete",
+          text: t("actions.delete"),
           style: "destructive",
           onPress: async () => {
             try {
               await DeleteCategory(categoryId);
               router.replace("/(tabs)/categories");
-              Alert.alert("Success", "Category removed successfully.");
+              Alert.alert(t("messages.success"), t("categoryRemoved"));
             } catch {
-              Alert.alert("Something went wrong. Please try again.");
+              Alert.alert(t("errorMessage" + t("tryAgain")));
             }
           },
         },
@@ -82,7 +83,7 @@ export default function CategoryDetailsScreen() {
   if (!category) {
     return (
       <ThemedText type="subtitle" style={{ textAlign: "center" }}>
-        Loading...
+        {t("messages.loading")}
       </ThemedText>
     );
   }
@@ -115,20 +116,20 @@ export default function CategoryDetailsScreen() {
         </ThemedView>
 
         <ThemedView style={{ flexDirection: "row", marginBottom: 5 }}>
-          <ThemedText type="defaultSemiBold">Type: </ThemedText>
-          <ThemedText type="default">{typeLabels[category.type]}</ThemedText>
+          <ThemedText type="defaultSemiBold">{t("labels.type")}: </ThemedText>
+          <ThemedText type="default">{t(`types.${category.type}`)}</ThemedText>
         </ThemedView>
 
         <ThemedView style={{ flexDirection: "row", gap: 10 }}>
           <ThemedButton
-            title="Update Category"
+            title={t("updateCategory")}
             onPress={() => {
               setEditingCategory(category);
               setModalVisible(true);
             }}
           />
           <ThemedButton
-            title="Remove Category"
+            title={t("removeCategory")}
             onPress={() => handleCategoryRemoval(category.id!)}
           />
         </ThemedView>
@@ -144,10 +145,10 @@ export default function CategoryDetailsScreen() {
           <View style={modalStyles.container}>
             <ThemedView style={modalStyles.content}>
               <ThemedText type="title" style={{ textAlign: "center" }}>
-                Edit Category
+                {t("editCategory")}
               </ThemedText>
               <ThemedText type="default" style={{ marginTop: 8 }}>
-                Name:
+                {t("labels.name")}:
               </ThemedText>
               <ThemedInput
                 value={editingCategory.name}
@@ -158,7 +159,7 @@ export default function CategoryDetailsScreen() {
                 }
               />
               <ThemedText type="default" style={{ marginTop: 8 }}>
-                Icon (optional):
+                {t("categoryIcon") + " " + t("optional")}:
               </ThemedText>
               <ThemedInput
                 value={editingCategory.icon ?? ""}
@@ -169,7 +170,7 @@ export default function CategoryDetailsScreen() {
                 }
               />
               <ThemedText type="default" style={{ marginTop: 8 }}>
-                Type:
+                {t("labels.type")}:
               </ThemedText>
               <ThemedModal
                 selectedValue={editingCategory.type}
@@ -181,9 +182,9 @@ export default function CategoryDetailsScreen() {
                   )
                 }
                 items={[
-                  { label: "Select a type...", value: "" },
-                  { label: "Income", value: "income" },
-                  { label: "Expense", value: "expense" },
+                  { label: t("selection.chooseType"), value: "" },
+                  { label: t("types.income"), value: "income" },
+                  { label: t("types.expense"), value: "expense" },
                 ]}
               />
               <ThemedView
@@ -194,11 +195,14 @@ export default function CategoryDetailsScreen() {
                 }}
               >
                 <ThemedButton
-                  title="Cancel"
+                  title={t("actions.cancel")}
                   style={{ backgroundColor: "gray" }}
                   onPress={() => setModalVisible(false)}
                 />
-                <ThemedButton title="Save" onPress={handleCategoryUpdate} />
+                <ThemedButton
+                  title={t("actions.save")}
+                  onPress={handleCategoryUpdate}
+                />
               </ThemedView>
             </ThemedView>
           </View>

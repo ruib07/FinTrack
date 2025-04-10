@@ -11,9 +11,11 @@ import { ICategory } from "@/types/category";
 import { storage } from "@/utils/storage";
 import { router } from "expo-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, Image } from "react-native";
 
 export default function AddCategoryScreen() {
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [icon, setIcon] = useState("");
@@ -32,10 +34,10 @@ export default function AddCategoryScreen() {
 
     try {
       await CreateCategory(newCategory);
-      Alert.alert("Category created sucessfully.");
+      Alert.alert(t("addCategorySuccess"));
       router.push("/(tabs)/categories");
     } catch {
-      Alert.alert("Something went wrong.");
+      Alert.alert(t("messages.errorMessage"));
     }
   };
 
@@ -50,30 +52,34 @@ export default function AddCategoryScreen() {
     >
       <ThemedView style={globalStyles.container}>
         <ThemedText type="title" style={{ marginBottom: 10 }}>
-          Category Creation
+          {t("categoryCreation")}
         </ThemedText>
         <ThemedView style={formStyles.formField}>
-          <ThemedInput onChangeText={setName} placeholder="Name" value={name} />
+          <ThemedInput
+            onChangeText={setName}
+            placeholder={t("labels.name")}
+            value={name}
+          />
           <ThemedInput
             onChangeText={setIcon}
-            placeholder="Icon (optional)"
+            placeholder={t("categoryIcon") + " " + t("optional")}
             value={icon}
           />
         </ThemedView>
         <ThemedText type="default" style={{ marginBottom: 8 }}>
-          Choose your type:
+          {t("selection.chooseType")}
         </ThemedText>
         <ThemedModal
           selectedValue={type}
           onValueChange={(itemValue) => setType(itemValue)}
           items={[
-            { label: "Select a type...", value: "" },
-            { label: "Income", value: "income" },
-            { label: "Expense", value: "expense" },
+            { label: t("selection.typeSelection"), value: "" },
+            { label: t("types.income"), value: "income" },
+            { label: t("types.expense"), value: "expense" },
           ]}
         />
         <ThemedButton
-          title="Create Category"
+          title={t("createCategory")}
           onPress={handleCategoryCreation}
         />
       </ThemedView>

@@ -18,12 +18,14 @@ import formStyles from "@/styles/formStyles";
 import globalStyles from "@/styles/globalStyles";
 import modalStyles from "@/styles/modalStyles";
 import { IBudget } from "@/types/budget";
+import { currencyLabels } from "@/utils/dictionaries";
 import { storage } from "@/utils/storage";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { router } from "expo-router";
 import { useSearchParams } from "expo-router/build/hooks";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Alert,
   Image,
@@ -34,6 +36,7 @@ import {
 } from "react-native";
 
 export default function BudgetDetailsScreen() {
+  const { t } = useTranslation();
   const [budget, setBudget] = useState<IBudget | null>(null);
   const [categoryName, setCategoryName] = useState<string | null>(null);
   const [, setError] = useState<string | null>(null);
@@ -89,28 +92,30 @@ export default function BudgetDetailsScreen() {
       await UpdateBudget(editingBudget.id!, editingBudget);
       setBudget(editingBudget);
       setModalVisible(false);
-      Alert.alert("Budget updated successfully.");
+      Alert.alert(t("budgetUpdated"));
     } catch {
-      Alert.alert("Error updating budget.");
+      Alert.alert(t("errorBudgetUpdate"));
     }
   };
 
   const handleBudgetRemoval = async (budgetId: string) => {
     Alert.alert(
-      "Confirm Deletion",
-      "Are you sure that you want to delete this budget?",
+      t("messages.confirmDeletion"),
+      t("confirmBudgetDeletionMessage"),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("actions.cancel"), style: "cancel" },
         {
-          text: "Delete",
+          text: t("actions.delete"),
           style: "destructive",
           onPress: async () => {
             try {
               await DeleteBudget(budgetId);
               router.replace("/(tabs)/budgets");
-              Alert.alert("Success", "Budget removed successfully.");
+              Alert.alert(t("messages.success"), t("budgetRemoved"));
             } catch {
-              Alert.alert("Something went wrong. Please try again.");
+              Alert.alert(
+                t("messages.errorMessage" + " " + t("messages.tryAgain"))
+              );
             }
           },
         },
@@ -121,7 +126,7 @@ export default function BudgetDetailsScreen() {
   if (!budget) {
     return (
       <ThemedText type="subtitle" style={{ textAlign: "center" }}>
-        Loading...
+        {t("messages.loading")}
       </ThemedText>
     );
   }
@@ -143,43 +148,51 @@ export default function BudgetDetailsScreen() {
             marginBottom: 5,
           }}
         >
-          <ThemedText type="title">Budget Details</ThemedText>
+          <ThemedText type="title">{t("budgetDetails")}</ThemedText>
         </ThemedView>
 
         <ThemedView style={{ flexDirection: "row", marginBottom: 5 }}>
-          <ThemedText type="defaultSemiBold">💰 Limit Amount: </ThemedText>
-          <ThemedText type="default">{budget.limit_amount}</ThemedText>
+          <ThemedText type="defaultSemiBold">
+            💰 {t("labels.limitAmount")}:{" "}
+          </ThemedText>
+          <ThemedText type="default">
+            {budget.limit_amount} {currencyLabels[currency]}
+          </ThemedText>
         </ThemedView>
 
         <ThemedView style={{ flexDirection: "row", marginBottom: 5 }}>
-          <ThemedText type="defaultSemiBold">📅 Start Date: </ThemedText>
+          <ThemedText type="defaultSemiBold">
+            📅 {t("labels.startDate")}:{" "}
+          </ThemedText>
           <ThemedText type="default">
             {moment(budget.start_date).format("DD/MM/YYYY")}
           </ThemedText>
         </ThemedView>
 
         <ThemedView style={{ flexDirection: "row", marginBottom: 5 }}>
-          <ThemedText type="defaultSemiBold">📅 End Date: </ThemedText>
+          <ThemedText type="defaultSemiBold">
+            📅 {t("labels.endDate")}:{" "}
+          </ThemedText>
           <ThemedText type="default">
             {moment(budget.end_date).format("DD/MM/YYYY")}
           </ThemedText>
         </ThemedView>
 
         <ThemedView style={{ flexDirection: "row", marginBottom: 5 }}>
-          <ThemedText type="defaultSemiBold">📌 Category: </ThemedText>
+          <ThemedText type="defaultSemiBold">📌 {t("category")}: </ThemedText>
           <ThemedText type="default">{categoryName}</ThemedText>
         </ThemedView>
 
         <ThemedView style={{ flexDirection: "row", gap: 10 }}>
           <ThemedButton
-            title="Update Budget"
+            title={t("updateBudget")}
             onPress={() => {
               setEditingBudget(budget);
               setModalVisible(true);
             }}
           />
           <ThemedButton
-            title="Remove Budget"
+            title={t("removeBudget")}
             onPress={() => handleBudgetRemoval(budget.id!)}
           />
         </ThemedView>
@@ -195,10 +208,10 @@ export default function BudgetDetailsScreen() {
           <View style={modalStyles.container}>
             <ThemedView style={modalStyles.content}>
               <ThemedText type="title" style={{ textAlign: "center" }}>
-                Edit Budget
+                {t("editBudget")}
               </ThemedText>
               <ThemedText type="default" style={{ marginTop: 8 }}>
-                Limit Amount:
+                {t("labels.limitAmount")}:
               </ThemedText>
               <ThemedInput
                 keyboardType="decimal-pad"
@@ -210,7 +223,7 @@ export default function BudgetDetailsScreen() {
                 }
               />
               <ThemedText type="default" style={{ marginTop: 8 }}>
-                Start Date:
+                {t("labels.startDate")}:
               </ThemedText>
               <TouchableOpacity
                 onPress={() => setShowStartDatePicker(true)}
@@ -239,7 +252,7 @@ export default function BudgetDetailsScreen() {
               )}
 
               <ThemedText type="default" style={{ marginTop: 8 }}>
-                End Date:
+                {t("labels.endDate")}:
               </ThemedText>
               <TouchableOpacity
                 onPress={() => setShowEndDatePicker(true)}
@@ -268,7 +281,7 @@ export default function BudgetDetailsScreen() {
               )}
 
               <ThemedText type="default" style={{ marginTop: 8 }}>
-                Category:
+                {t("category")}:
               </ThemedText>
               <ThemedModal
                 selectedValue={editingBudget.category_id}
@@ -287,11 +300,14 @@ export default function BudgetDetailsScreen() {
                 }}
               >
                 <ThemedButton
-                  title="Cancel"
+                  title={t("actions.cancel")}
                   style={{ backgroundColor: "gray" }}
                   onPress={() => setModalVisible(false)}
                 />
-                <ThemedButton title="Save" onPress={handleBudgetUpdate} />
+                <ThemedButton
+                  title={t("actions.save")}
+                  onPress={handleBudgetUpdate}
+                />
               </ThemedView>
             </ThemedView>
           </View>

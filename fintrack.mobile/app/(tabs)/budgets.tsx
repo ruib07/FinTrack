@@ -12,10 +12,12 @@ import { storage } from "@/utils/storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Image } from "react-native";
 import { DataTable } from "react-native-paper";
 
 export default function BudgetsScreen() {
+  const { t } = useTranslation();
   const [budgets, setBudgets] = useState<IBudget[]>([]);
   const [categories, setCategories] = useState<
     { label: string; value: string }[]
@@ -71,21 +73,21 @@ export default function BudgetsScreen() {
       }
     >
       <ThemedView style={globalStyles.stepContainer}>
-        <ThemedText type="subtitle">Budgets</ThemedText>
+        <ThemedText type="subtitle">{t("budgets")}</ThemedText>
         <ThemedButton
-          title="Add Budget"
+          title={t("addBudget")}
           onPress={() => router.push("/(budgets)/addbudget")}
         />
         <DataTable style={{ marginTop: 10 }}>
           <DataTable.Header style={{ backgroundColor: tableBackground }}>
             <DataTable.Title>
               <ThemedText type="table" style={{ color: "#fff" }}>
-                Limit Amount
+                {t("labels.limitAmount")}
               </ThemedText>
             </DataTable.Title>
             <DataTable.Title>
               <ThemedText type="table" style={{ color: "#fff" }}>
-                Category
+                {t("category")}
               </ThemedText>
             </DataTable.Title>
           </DataTable.Header>

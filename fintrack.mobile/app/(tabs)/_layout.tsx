@@ -6,9 +6,11 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { storage } from "@/utils/storage";
 import { Tabs } from "expo-router";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Platform } from "react-native";
 
 export default function TabLayout() {
+  const { t } = useTranslation();
   const colorScheme = useColorScheme();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
@@ -53,7 +55,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: t("home"),
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="house.fill" color={color} />
           ),
@@ -62,7 +64,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="categories"
         options={{
-          title: "Categories",
+          title: t("categories"),
           href: isAuthenticated ? undefined : null,
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="folder.fill" color={color} />
@@ -72,7 +74,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="transactions"
         options={{
-          title: "Transactions",
+          title: t("transactions"),
           href: isAuthenticated ? undefined : null,
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="dollarsign.circle.fill" color={color} />
@@ -82,7 +84,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="budgets"
         options={{
-          title: "Budgets",
+          title: t("budgets"),
           href: isAuthenticated ? undefined : null,
           tabBarIcon: ({ color }) => (
             <IconSymbol
@@ -96,7 +98,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
+          title: t("profile"),
           href: isAuthenticated ? undefined : null,
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="person.fill" color={color} />

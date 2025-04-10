@@ -13,9 +13,11 @@ import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
 import moment from "moment";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, ScrollView, TouchableOpacity } from "react-native";
 
 export default function TransactionsScreen() {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
@@ -82,10 +84,10 @@ export default function TransactionsScreen() {
     <ScrollView>
       <ThemedView style={globalStyles.stepContainer}>
         <ThemedText type="subtitle" style={{ marginTop: 100 }}>
-          Transactions
+          {t("transactions")}
         </ThemedText>
         <ThemedInput
-          placeholder="Search by category"
+          placeholder={t("searchTransaction")}
           clearButtonMode="always"
           autoCapitalize="none"
           autoCorrect={false}
@@ -94,7 +96,7 @@ export default function TransactionsScreen() {
           style={{ width: "90%" }}
         />
         <ThemedButton
-          title="Add Transaction"
+          title={t("addTransaction")}
           onPress={() => router.push("/(transactions)/addtransaction")}
         />
 
@@ -113,17 +115,19 @@ export default function TransactionsScreen() {
               }
             >
               <ThemedText type="subtitle">
-                💰 Amount: {transaction.amount} {currencyLabels[currency]}
+                💰 {t("labels.amount")}: {transaction.amount}{" "}
+                {currencyLabels[currency]}
               </ThemedText>
               <ThemedText type="subtitle" style={{ marginTop: 4 }}>
-                📌 Category:{" "}
+                📌 {t("category")}:{" "}
                 {categories[transaction.category_id] || "Loading..."}
               </ThemedText>
               <ThemedText type="subtitle" style={{ marginTop: 4 }}>
-                ✏️ Note: {transaction.note || "None"}
+                ✏️ {t("labels.note")}: {transaction.note || "None"}
               </ThemedText>
               <ThemedText type="subtitle" style={{ marginTop: 4 }}>
-                📅 Date: {moment(transaction.date).format("DD/MM/YYYY HH:mm")}
+                📅 {t("labels.date")}:{" "}
+                {moment(transaction.date).format("DD/MM/YYYY HH:mm")}
               </ThemedText>
             </TouchableOpacity>
           </ThemedView>

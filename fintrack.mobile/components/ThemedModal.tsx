@@ -1,9 +1,9 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 import ModalSelector from "react-native-modal-selector";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
-import globalStyles from "@/styles/globalStyles";
 
 export type ThemedModalProps = {
   selectedValue: string;
@@ -21,6 +21,7 @@ export function ThemedModal({
     key: item.value,
   }));
   const backgroundColor = useThemeColor({}, "background");
+  const { t } = useTranslation();
 
   return (
     <ThemedView style={styles.container}>
@@ -28,13 +29,13 @@ export function ThemedModal({
         data={itemsWithKey}
         initValue={selectedValue}
         onChange={(option) => onValueChange(option.value)}
-        cancelText="Cancel"
+        cancelText={t("actions.cancel")}
         overlayStyle={{
           justifyContent: "center",
           alignItems: "center",
         }}
         optionContainerStyle={{
-          maxHeight: 150,
+          maxHeight: 200,
         }}
         cancelStyle={{
           paddingVertical: 12,
@@ -46,7 +47,9 @@ export function ThemedModal({
         <ThemedView
           style={[styles.selectedValue, { backgroundColor: backgroundColor }]}
         >
-          <ThemedText>{selectedValue || "Select..."}</ThemedText>
+          <ThemedText>
+            {selectedValue || t("selection.choose") + "..."}
+          </ThemedText>
         </ThemedView>
       </ModalSelector>
     </ThemedView>

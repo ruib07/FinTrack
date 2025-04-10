@@ -1,4 +1,3 @@
-import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -7,19 +6,23 @@ import { useAuth } from "@/context/AuthContext";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { GetTransactionsByUser } from "@/services/transactions.service";
 import { GetUserById } from "@/services/users.service";
+import chartStyles from "@/styles/chartStyles";
 import globalStyles from "@/styles/globalStyles";
 import { ITransaction } from "@/types/transaction";
-import { processExpensesForYear } from "@/utils/expenses";
-import { processIncomesForYear } from "@/utils/incomes";
+import {
+  processExpensesForYear,
+  processIncomesForYear,
+} from "@/utils/transactionAnalytics";
 import { useFont } from "@shopify/react-native-skia";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Image } from "react-native";
 import { Bar, CartesianChart, Line, Pie, PolarChart } from "victory-native";
 import spacemono from "../../assets/fonts/SpaceMono-Regular.ttf";
-import chartStyles from "@/styles/chartStyles";
 
 export default function HomeScreen() {
+  const { t } = useTranslation();
   const [user, setUser] = useState<{ name: string } | null>(null);
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [, setError] = useState<string | null>(null);
@@ -63,8 +66,8 @@ export default function HomeScreen() {
   );
 
   const pieData = [
-    { x: "Expenses", y: totalExpenses, color: "#ff0000" },
-    { x: "Incomes", y: totalIncomes, color: "#008000" },
+    { x: t("expenses"), y: totalExpenses, color: "#ff0000" },
+    { x: t("incomes"), y: totalIncomes, color: "#008000" },
   ];
 
   return (
@@ -78,7 +81,7 @@ export default function HomeScreen() {
     >
       {!user ? (
         <ThemedText type="subtitle" style={{ textAlign: "center" }}>
-          Need to authenticate!
+          {t("needAuth")}
         </ThemedText>
       ) : (
         <>
@@ -88,7 +91,7 @@ export default function HomeScreen() {
                 type="subtitle"
                 style={{ textAlign: "center", marginTop: 20 }}
               >
-                Expenses vs Incomes
+                {t("expensesVsIncomes")}
               </ThemedText>
               <ThemedView style={{ height: 200 }}>
                 <PolarChart
@@ -120,7 +123,7 @@ export default function HomeScreen() {
                 type="subtitle"
                 style={{ textAlign: "center", marginTop: 20 }}
               >
-                Expenses for the year {new Date().getFullYear()}
+                {t("expensesForYear", { year: new Date().getFullYear() })}
               </ThemedText>
 
               <ThemedView style={{ height: 300 }}>
@@ -144,7 +147,7 @@ export default function HomeScreen() {
                 type="subtitle"
                 style={{ textAlign: "center", marginTop: 10 }}
               >
-                Incomes for the year {new Date().getFullYear()}
+                {t("incomesForYear", { year: new Date().getFullYear() })}
               </ThemedText>
               <ThemedView style={{ height: 300 }}>
                 <CartesianChart

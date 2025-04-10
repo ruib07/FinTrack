@@ -6,15 +6,16 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { GetCategoriesByUser } from "@/services/categories.service";
 import globalStyles from "@/styles/globalStyles";
 import { ICategory } from "@/types/category";
-import { typeLabels } from "@/utils/dictionaries";
 import { storage } from "@/utils/storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Image } from "react-native";
 import { DataTable } from "react-native-paper";
 
 export default function CategoriesScreen() {
+  const { t } = useTranslation();
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [, setError] = useState<string | null>(null);
 
@@ -50,21 +51,21 @@ export default function CategoriesScreen() {
       }
     >
       <ThemedView style={globalStyles.stepContainer}>
-        <ThemedText type="subtitle">Categories</ThemedText>
+        <ThemedText type="subtitle">{t("categories")}</ThemedText>
         <ThemedButton
-          title="Add Category"
+          title={t("addCategory")}
           onPress={() => router.push("/(categories)/addcategory")}
         />
         <DataTable style={{ marginTop: 10 }}>
           <DataTable.Header style={{ backgroundColor: tableBackground }}>
             <DataTable.Title>
               <ThemedText type="table" style={{ color: "#fff" }}>
-                Name
+                {t("labels.name")}
               </ThemedText>
             </DataTable.Title>
             <DataTable.Title>
               <ThemedText type="table" style={{ color: "#fff" }}>
-                Type
+                {t("labels.type")}
               </ThemedText>
             </DataTable.Title>
           </DataTable.Header>
@@ -88,7 +89,7 @@ export default function CategoriesScreen() {
               </DataTable.Cell>
               <DataTable.Cell>
                 <ThemedText type="table">
-                  {typeLabels[category.type]}
+                  {t(`types.${category.type}`)}
                 </ThemedText>
               </DataTable.Cell>
             </DataTable.Row>

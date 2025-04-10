@@ -3,9 +3,8 @@ import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedModal } from "@/components/ThemedModal";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { useAuth } from "@/context/AuthContext";
 import i18n from "@/locales/i18n";
-import { GetUserById } from "@/services/users.service";
+import { storage } from "@/utils/storage";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -13,46 +12,29 @@ import { StyleSheet } from "react-native";
 
 export default function LanguageSelectorScreen() {
   const { t } = useTranslation();
-  const { userId } = useAuth();
-  const [user, setUser] = useState<{ name: string } | null>(null);
-  const [, setError] = useState<string | null>(null);
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(i18n.language);
   const [items, setItems] = useState([
     { label: t("portuguese"), value: "pt" },
     { label: t("english"), value: "en" },
   ]);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      if (!userId) {
-        setUser(null);
-        return;
-      }
+    setItems([
+      { label: t("portuguese"), value: "pt" },
+      { label: t("english"), value: "en" },
+    ]);
+  }, [i18n.language]);
 
-      try {
-        const response = await GetUserById(userId);
-        setUser(response.data);
-      } catch {
-        setError("Failed to load user.");
-      }
-    };
-
-    fetchUser();
-  }, [userId]);
-
-  if (!user) {
-    return (
-      <ThemedText type="subtitle" style={{ textAlign: "center" }}>
-        Loading...
-      </ThemedText>
-    );
-  }
+  const handleLanguageChange = async (lang: string) => {
+    setValue(lang);
+    await storage.setItem("language", lang);
+    await i18n.changeLanguage(lang);
+  };
 
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title">
-        {t("welcome")} {user.name}!
+        {t("welcome")}!
         <HelloWave />
       </ThemedText>
 
@@ -61,14 +43,14 @@ export default function LanguageSelectorScreen() {
       </ThemedText>
       <ThemedModal
         selectedValue={value}
-        onValueChange={(value) => i18n.changeLanguage(value)}
+        onValueChange={handleLanguageChange}
         items={items}
       />
 
       <ThemedButton
-        title={t("languageSelection")}
+        title={t("selection")}
         style={{ marginTop: 10 }}
-        onPress={() => router.push("/")}
+        onPress={() => router.push("/(tabs)/signin")}
       />
     </ThemedView>
   );
@@ -79,9 +61,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  dropDown: {
-    marginTop: 20,
-    paddingHorizontal: 40,
   },
 });
