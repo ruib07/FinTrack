@@ -12,6 +12,23 @@
     "transactions": "Transações",
     "budgets": "Orçamentos",
     "profile": "Perfil",
+    "authentication": "Autenticação",
+
+    "_signupScreen": "=== Sign Up ===",
+    "signup": "Criar Conta",
+    "createAccount": "Criar Conta",
+    "alreadyHaveAccount": "Já tem uma conta?",
+
+    "_signinScreen": "=== Sign In ===",
+    "signin": "Entrar",
+    "forgotPassword": "Esqueceu a palavra-passe?",
+    "dontHaveAccount": "Não tem uma conta?",
+    "clickHere": "Clique aqui",
+
+    "_recoverPasswordScreen": "=== Recover Password ===",
+    "recoverPassword": "Recuperar Palavra-Passe",
+    "sendEmail": "Enviar Email",
+    "sendEmailSuccess": "Email enviado com sucesso.",
 
     "_homeScreen": "=== Home ===",
     "needAuth": "Precisa de autenticação!",
@@ -70,6 +87,16 @@
     "removeBudget": "Remover Orçamento",
     "editBudget": "Editar Orçamento",
 
+    "_profileScreen": "=== Profile ===",
+    "editInformation": "Editar Informação",
+    "userUpdated": "Utilizador atualizado com sucesso.",
+    "errorUserUpdate": "Atualização do utilizador falhou.",
+    "signout": "Sair",
+    "removeAccount": "Remover Conta",
+    "confirmAccountDeletionMessage": "Tem a certeza que deseja remover a sua conta?",
+    "accountRemoved": "A sua conta foi removida.",
+    "saveChanges": "Guardar Alterações",
+
     "_shared": "=== Shared ===",
     "messages": {
       "success": "Sucesso",
@@ -85,6 +112,7 @@
     },
     "labels": {
       "name": "Nome",
+      "password": "Palavra-Passe",
       "type": "Tipo",
       "amount": "Montante",
       "note": "Nota",
@@ -92,12 +120,15 @@
       "paymentMethod": "Método de Pagamento",
       "limitAmount": "Montante Limite",
       "startDate": "Data de Início",
-      "endDate": "Data de Fim"
+      "endDate": "Data de Fim",
+      "currency": "Moeda"
     },
     "selection": {
+      "chooseCurrency": "Escolha a sua moeda:",
       "chooseType": "Escolha o tipo:",
       "choosePaymentMethod": "Selecione um método de pagamento:",
       "chooseCategory": "Selecione uma categoria:",
+      "currencySelection": "Selecione uma moeda...",
       "typeSelection": "Selecione o tipo...",
       "paymentMethodSelection": "Selecione o método de pagamento...",
       "choose": "Selecionar"
@@ -112,6 +143,21 @@
       "income": "Receita"
     },
     "optional": "(opcional)",
-    "category": "Categoria"
+    "category": "Categoria",
+
+    "months": {
+      "jan": "Jan",
+      "feb": "Fev",
+      "mar": "Mar",
+      "apr": "Abr",
+      "may": "Maio",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Ago",
+      "sep": "Set",
+      "oct": "Out",
+      "nov": "Nov",
+      "dec": "Dez"
+    }
   }
 }

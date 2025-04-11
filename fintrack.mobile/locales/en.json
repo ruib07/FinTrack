@@ -12,6 +12,22 @@
     "transactions": "Transactions",
     "budgets": "Budgets",
     "profile": "Profile",
+    "authentication": "Authentication",
+
+    "_signupScreen": "=== Sign Up ===",
+    "signup": "Sign Up",
+    "createAccount": "Create Account",
+    "alreadyHaveAccount": "Already have an account?",
+
+    "_signinScreen": "=== Sign In ===",
+    "signin": "Sign In",
+    "forgotPassword": "Forgot Password?",
+    "dontHaveAccount": "Don't have an account?",
+
+    "_recoverPasswordScreen": "=== Recover Password ===",
+    "recoverPassword": "Recover Password",
+    "sendEmail": "Send Email",
+    "sendEmailSuccess": "Email sent successfully.",
 
     "_homeScreen": "=== Home ===",
     "needAuth": "Need to authenticate!",
@@ -70,6 +86,16 @@
     "removeBudget": "Remove Budget",
     "editBudget": "Edit Budget",
 
+    "_profileScreen": "=== Profile ===",
+    "editInformation": "Edit Information",
+    "userUpdated": "User updated successfully.",
+    "errorUserUpdate": "Failed to update user.",
+    "signout": "Sign Out",
+    "removeAccount": "Remove Account",
+    "confirmAccountDeletionMessage": "Are you sure that you want to delete your account?",
+    "accountRemoved": "Your account has been deleted.",
+    "saveChanges": "Save Changes",
+
     "_shared": "=== Shared ===",
     "messages": {
       "success": "Success",
@@ -85,6 +111,7 @@
     },
     "labels": {
       "name": "Name",
+      "password": "Password",
       "type": "Type",
       "amount": "Amount",
       "note": "Note",
@@ -92,12 +119,15 @@
       "paymentMethod": "Payment Method",
       "limitAmount": "Limit Amount",
       "startDate": "Start Date",
-      "endDate": "End Date"
+      "endDate": "End Date",
+      "currency": "Currency"
     },
     "selection": {
+      "chooseCurrency": "Choose your currency:",
       "chooseType": "Choose your type:",
       "choosePaymentMethod": "Choose payment method:",
       "chooseCategory": "Choose a category:",
+      "currencySelection": "Select a currency...",
       "typeSelection": "Select a type...",
       "paymentMethodSelection": "Select a payment method...",
       "choose": "Select"
@@ -112,6 +142,22 @@
       "income": "Income"
     },
     "optional": "(optional)",
-    "category": "Category"
+    "category": "Category",
+    "clickHere": "Click here",
+
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dec"
+    }
   }
 }

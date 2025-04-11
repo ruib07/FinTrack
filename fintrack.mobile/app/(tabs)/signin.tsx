@@ -13,9 +13,11 @@ import { storage } from "@/utils/storage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, Image, TouchableOpacity } from "react-native";
 
 export default function SigninScreen() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -45,7 +47,7 @@ export default function SigninScreen() {
 
       router.push("/");
     } catch {
-      Alert.alert("Something went wrong.");
+      Alert.alert(t("messages.errorMessage"));
     }
   };
 
@@ -60,7 +62,7 @@ export default function SigninScreen() {
     >
       <ThemedView style={globalStyles.container}>
         <ThemedText type="title" style={{ marginBottom: 10 }}>
-          Sign in
+          {t("signin")}
         </ThemedText>
         <ThemedView style={formStyles.formField}>
           <ThemedInput
@@ -73,7 +75,7 @@ export default function SigninScreen() {
             <ThemedInput
               secureTextEntry={!showPassword}
               onChangeText={setPassword}
-              placeholder="Password"
+              placeholder={t("labels.password")}
               value={password}
             />
             <TouchableOpacity
@@ -100,20 +102,20 @@ export default function SigninScreen() {
             type="link"
             onPress={() => router.push("/(auth)/recoverpassword")}
           >
-            Forgot Password?
+            {t("forgotPassword")}
           </ThemedText>
         </ThemedView>
-        <ThemedButton title="Sign In" onPress={handleSignin} />
+        <ThemedButton title={t("signin")} onPress={handleSignin} />
         <ThemedView
           style={{ marginTop: 8, flexDirection: "row", alignItems: "center" }}
         >
-          <ThemedText>Dont have an account?</ThemedText>
+          <ThemedText>{t("dontHaveAccount")}</ThemedText>
           <ThemedText
             type="link"
             style={{ marginLeft: 5 }}
             onPress={() => router.push("/signup")}
           >
-            Click here
+            {t("clickHere")}
           </ThemedText>
         </ThemedView>
       </ThemedView>

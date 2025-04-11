@@ -48,9 +48,12 @@ export default function LanguageSelectorScreen() {
       />
 
       <ThemedButton
-        title={t("selection")}
+        title={t("selection.choose")}
         style={{ marginTop: 10 }}
-        onPress={() => router.push("/(tabs)/signin")}
+        onPress={async () => {
+          await handleLanguageChange(value);
+          router.push("/(tabs)/signin");
+        }}
       />
     </ThemedView>
   );

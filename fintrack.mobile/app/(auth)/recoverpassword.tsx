@@ -9,9 +9,11 @@ import globalStyles from "@/styles/globalStyles";
 import { ISendEmail } from "@/types/resetPassword";
 import { router } from "expo-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, Image } from "react-native";
 
 export default function RecoverPasswordScreen() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
 
   const handleEmailRequest = async () => {
@@ -19,10 +21,10 @@ export default function RecoverPasswordScreen() {
 
     try {
       await SendEmail(emailReq);
-      Alert.alert("Email sent successfully.");
+      Alert.alert(t("sendEmailSuccess"));
       router.push("/(tabs)/signin");
     } catch {
-      Alert.alert("Something went wrong.");
+      Alert.alert(t("messages.errorMessage"));
     }
   };
 
@@ -37,7 +39,7 @@ export default function RecoverPasswordScreen() {
     >
       <ThemedView style={globalStyles.container}>
         <ThemedText type="title" style={{ marginBottom: 10 }}>
-          Recover Password
+          {t("recoverPassword")}
         </ThemedText>
         <ThemedView style={formStyles.formField}>
           <ThemedInput
@@ -47,7 +49,7 @@ export default function RecoverPasswordScreen() {
             keyboardType="email-address"
           />
         </ThemedView>
-        <ThemedButton title="Send Email" onPress={handleEmailRequest} />
+        <ThemedButton title={t("sendEmail")} onPress={handleEmailRequest} />
       </ThemedView>
     </ParallaxScrollView>
   );

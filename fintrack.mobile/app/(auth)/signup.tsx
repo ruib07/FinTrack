@@ -12,9 +12,11 @@ import { IUser } from "@/types/user";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, Image, TouchableOpacity } from "react-native";
 
 export default function SignupScreen() {
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +38,7 @@ export default function SignupScreen() {
       await Signup(newUser);
       router.push("/(tabs)/languageselector");
     } catch {
-      Alert.alert("Something went wrong.");
+      Alert.alert(t("messages.errorMessage"));
     }
   };
 
@@ -51,10 +53,14 @@ export default function SignupScreen() {
     >
       <ThemedView style={globalStyles.container}>
         <ThemedText type="title" style={{ marginBottom: 10 }}>
-          Sign up
+          {t("signup")}
         </ThemedText>
         <ThemedView style={formStyles.formField}>
-          <ThemedInput onChangeText={setName} placeholder="Name" value={name} />
+          <ThemedInput
+            onChangeText={setName}
+            placeholder={t("labels.name")}
+            value={name}
+          />
           <ThemedInput
             onChangeText={setEmail}
             placeholder="Email"
@@ -65,7 +71,7 @@ export default function SignupScreen() {
             <ThemedInput
               secureTextEntry={!showPassword}
               onChangeText={setPassword}
-              placeholder="Password"
+              placeholder={t("labels.password")}
               value={password}
             />
             <TouchableOpacity
@@ -80,30 +86,30 @@ export default function SignupScreen() {
             </TouchableOpacity>
           </ThemedView>
           <ThemedText type="default" style={{ marginBottom: 8 }}>
-            Choose your currency:
+            {t("selection.chooseCurrency")}
           </ThemedText>
           <ThemedModal
             selectedValue={currency}
             onValueChange={(itemValue) => setCurrency(itemValue)}
             items={[
-              { label: "Select a currency...", value: "" },
+              { label: t("selection.currencySelection"), value: "" },
               { label: "EUR (€)", value: "EUR" },
               { label: "USD ($)", value: "USD" },
               { label: "BRL (R$)", value: "BRL" },
             ]}
           />
         </ThemedView>
-        <ThemedButton title="Create Account" onPress={handleSignup} />
+        <ThemedButton title={t("createAccount")} onPress={handleSignup} />
         <ThemedView
           style={{ marginTop: 8, flexDirection: "row", alignItems: "center" }}
         >
-          <ThemedText>Already have an account?</ThemedText>
+          <ThemedText>{t("alreadyHaveAccount")}</ThemedText>
           <ThemedText
             type="link"
             style={{ marginLeft: 5 }}
             onPress={() => router.push("/signin")}
           >
-            Click here
+            {t("clickHere")}
           </ThemedText>
         </ThemedView>
       </ThemedView>

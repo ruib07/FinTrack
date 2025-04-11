@@ -14,9 +14,11 @@ import { storage } from "@/utils/storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert } from "react-native";
 
 export default function ProfileScreen() {
+  const { t } = useTranslation();
   const [user, setUser] = useState<IUser>();
   const [, setError] = useState<string | null>(null);
   const { setAuth } = useAuth();
@@ -70,10 +72,10 @@ export default function ProfileScreen() {
       };
 
       await UpdateUser(userId, updateUserData);
-      Alert.alert("User updated successfully.");
+      Alert.alert(t("userUpdated"));
       setIsEditing(false);
     } catch {
-      setError("Failed to update user.");
+      setError(t("errorUserUpdate"));
     }
   };
 
@@ -87,6 +89,7 @@ export default function ProfileScreen() {
   const handleSignout = async () => {
     await storage.removeItem("token");
     await storage.removeItem("userId");
+    await storage.removeItem("currency");
 
     setUser(undefined);
     setAuth(null);
@@ -95,23 +98,28 @@ export default function ProfileScreen() {
 
   const handleAccountDeletion = async (userId: string) => {
     Alert.alert(
-      "Confirm Deletion",
-      "Are you sure that you want to delete your account?",
+      t("messages.confirmDeletion"),
+      t("confirmAccountDeletionMessage"),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("actions.cancel"), style: "cancel" },
         {
-          text: "Delete",
+          text: t("actions.delete"),
           style: "destructive",
           onPress: async () => {
             try {
               await DeleteUser(userId);
               await storage.removeItem("token");
               await storage.removeItem("userId");
+              await storage.removeItem("currency");
+              await storage.removeItem("language");
+
               setAuth(null);
               router.replace("/");
-              Alert.alert("Success", "Your account has been deleted.");
+              Alert.alert(t("messages.success"), t("accountRemoved"));
             } catch {
-              Alert.alert("Something went wrong. Please try again.");
+              Alert.alert(
+                t("messages.errorMessage" + " " + t("messages.tryAgain"))
+              );
             }
           },
         },
@@ -131,11 +139,11 @@ export default function ProfileScreen() {
       }
     >
       <ThemedView style={profileStyles.titleContainer}>
-        <ThemedText type="title">Profile</ThemedText>
+        <ThemedText type="title">{t("profile")}</ThemedText>
       </ThemedView>
       <ThemedView style={globalStyles.container}>
         <ThemedText style={profileStyles.text}>
-          <ThemedText type="subtitleSemiBold">Name:</ThemedText>
+          <ThemedText type="subtitleSemiBold">{t("labels.name")}:</ThemedText>
         </ThemedText>
         <ThemedInput
           style={{ marginBottom: 20 }}
@@ -152,7 +160,9 @@ export default function ProfileScreen() {
           editable={isEditing}
         />
         <ThemedText style={[profileStyles.text, { marginTop: 4 }]}>
-          <ThemedText type="subtitleSemiBold">Currency:</ThemedText>
+          <ThemedText type="subtitleSemiBold">
+            {t("labels.currency")}:
+          </ThemedText>
         </ThemedText>
         {isEditing ? (
           <ThemedModal
@@ -172,7 +182,7 @@ export default function ProfileScreen() {
         <ThemedView style={{ flexDirection: "row", gap: 10 }}>
           {isEditing && (
             <ThemedButton
-              title="Save Changes"
+              title={t("saveChanges")}
               onPress={() =>
                 handleUserUpdate(user?.id || "", {
                   name: editableName,
@@ -185,7 +195,7 @@ export default function ProfileScreen() {
 
           {isEditing && (
             <ThemedButton
-              title="Cancel"
+              title={t("actions.cancel")}
               style={{ flex: 1, backgroundColor: "gray" }}
               onPress={handleCancelEdit}
             />
@@ -193,7 +203,7 @@ export default function ProfileScreen() {
 
           {!isEditing && (
             <ThemedButton
-              title="Edit Information"
+              title={t("editInformation")}
               onPress={() => setIsEditing(true)}
             />
           )}
@@ -201,9 +211,9 @@ export default function ProfileScreen() {
         <ThemedView
           style={{ flexDirection: "row", gap: 20, justifyContent: "center" }}
         >
-          <ThemedButton title="Sign Out" onPress={handleSignout} />
+          <ThemedButton title={t("signout")} onPress={handleSignout} />
           <ThemedButton
-            title="Remove Account"
+            title={t("removeAccount")}
             onPress={() => {
               handleAccountDeletion(user!.id!);
             }}

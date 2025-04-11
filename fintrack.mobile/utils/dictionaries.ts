@@ -5,11 +5,6 @@ export const paymentMethodLabels: Record<string, string> = {
   mbway: "MB Way",
 };
 
-export const typeLabels: Record<string, string> = {
-  income: "Income",
-  expense: "Expense",
-};
-
 export const currencyLabels: Record<string, string> = {
   EUR: "€",
   USD: "$",

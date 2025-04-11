@@ -1,9 +1,9 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { monthsOfYear } from "@/constants/Months";
 import { useAuth } from "@/context/AuthContext";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { useTranslatedMonths } from "@/hooks/useTranslatedMonths";
 import { GetTransactionsByUser } from "@/services/transactions.service";
 import { GetUserById } from "@/services/users.service";
 import chartStyles from "@/styles/chartStyles";
@@ -23,6 +23,7 @@ import spacemono from "../../assets/fonts/SpaceMono-Regular.ttf";
 
 export default function HomeScreen() {
   const { t } = useTranslation();
+  const monthsOfYear = useTranslatedMonths();
   const [user, setUser] = useState<{ name: string } | null>(null);
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [, setError] = useState<string | null>(null);
@@ -168,7 +169,7 @@ export default function HomeScreen() {
             </>
           ) : (
             <ThemedText style={{ textAlign: "center" }}>
-              No data available for the year.
+              {t("noData")}
             </ThemedText>
           )}
         </>
