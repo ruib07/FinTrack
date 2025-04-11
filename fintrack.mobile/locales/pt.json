@@ -14,6 +14,10 @@
     "profile": "Perfil",
     "authentication": "Autenticação",
 
+    "_notFoundScreen": "=== Not Found ===",
+    "screenDontExist": "This screen doesn't exist.",
+    "goToHome": "Go to home screen!",
+
     "_signupScreen": "=== Sign Up ===",
     "signup": "Criar Conta",
     "createAccount": "Criar Conta",
